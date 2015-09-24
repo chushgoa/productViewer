@@ -117,7 +117,7 @@ function init() {
     spherePos = new THREE.Vector3();
     
     /* sprite */
-    var spriteMap = THREE.ImageUtils.loadTexture("images/icon_comments.png");
+    var spriteMap = THREE.ImageUtils.loadTexture("images/plus.png");
     var spriteMaterial = new THREE.SpriteMaterial({map: spriteMap, color: 0xffffff, fog: true});
     var spriteObj = new THREE.Sprite(spriteMaterial);
     spriteObj.name = "sprite";
@@ -332,15 +332,16 @@ function update(){
             if(intersects[ 0 ].object.name == "sprite" ) {
                  
 			INTERSECTED.material.color.setHex( 0xff0000 );
-            //alert(intersects[0].object.name);
+            // alert(intersects[0].object.name);
             }
 		}
 	} 
 	else // there are no intersections
 	{
 		// restore previous intersection object (if it exists) to its original color
-		if ( INTERSECTED ) 
+		if ( INTERSECTED )
 			INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+           
 		// remove previous intersection object reference
 		//     by setting current intersection object to "nothing"
 		INTERSECTED = null;
