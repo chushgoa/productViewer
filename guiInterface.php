@@ -12,22 +12,16 @@
 body {
 	width: 100%;
 }
-#guiBarBase {
-	width: 50%;
-	height: 35px;
-	position: absolute;
-	bottom: 10px;
-	left: 25%;
-	outline: 1px solid;
-}
+
 
 #guiBar {
 	width: 50%;
 	height: 50px;
 	position: absolute;
-	bottom: 50px;
+	bottom: 55px;
 	left: 25%;
 	outline: 1px solid;
+	display: none;
 }
 
 #guiBarContentWrapper{
@@ -106,17 +100,44 @@ body {
 	background-color: red;
 }
 
+/* GUIBAR BASE SECTION */
+
+#guiBarBase {
+	width: 50%;
+	height: 35px;
+	position: absolute;
+	bottom: 15px;
+	left: 25%;
+	text-align: center;
+	letter-spacing: 10px;
+	font-size: 35px;
+	line-height: 35px;
+}
+
+#guiBarBaseWrapper {
+	display: inline-block;
+}
+
 .guiBaseBtn {
 	width: 35px;
 	height: 35px;
-	margin-right: 3px;
-	background-color: #CCC;
+	background-color: #FFF;
 	display: inline-block;
-	text-align: center;
+	white-space: nowrap;
+	verticle-align: middle;
 }
 
 .guiBaseBtn:hover {
-	opacity: 0.5;
+	cursor: pointer;
+	
+	
+}
+
+/* guiBase buttons animation code */
+
+@keyframes buttonHover {
+	from { background-color: #FFF; }
+	to { background-color: green; }
 }
 
 
@@ -125,6 +146,9 @@ body {
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel=stylesheet href="css/jquery-ui.css" />
+<link rel=stylesheet href="css/hover.css" /> <!-- CSS3 HOVER EFFECTS -->
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all"> <!-- FONT AWSOME [Dependencies: HOVER EFFECTS ] -->
 
 <script>
 	$(document).ready(function(){
@@ -160,9 +184,11 @@ body {
 		});
 	});
 </script>
+	
 </head>
 
 <body>
+
 <?php
 // ----------------------------------------------------------------------------
 //path to directory to scan. i have included a wildcard for a subdirectory
@@ -213,10 +239,11 @@ foreach($images as $image){ $imgs[] = "$image"; }
 		
 	</div>
 	<div id='guiBarBase'>
-		<div id='guiCloseBtn' class='guiBaseBtn'></div>
-		<div id='' class='guiBaseBtn'></div>
-		<div id='' class='guiBaseBtn'></div>
-		<div id='' class='guiBaseBtn'></div>
+		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
+		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
+		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
+		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera"></i></span></div>
+		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
 	</div>
 <body>
 
