@@ -10,61 +10,42 @@
             body {
               	font-family: Monospace;
                 font-weight: bold;
-                background-color: #ccccff;
-                margin: 0px;
-                overflow: hidden;
+				width: 100%;
             }
-            canvas {
-                z-index: 0;   
-            }
-            
-          
+			
+			.startBtn {
+				display: block;
+				width: 150px;
+				height: 50px;
+				color: #FFF;
+				background: #000;
+				border: none;
+				padding: 10px 10px 10px 10px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 300px;
+				font-family: Monospace;
+                font-weight: bold;
+				font-size: 25px;
+				line-height: 15px;
+			}
+
+			.startBtn:hover{
+				color: #AAA;
+				background: #000;
+				border: none;
+				padding: 10px 20px 10px 20px;
+				cursor: pointer;
+			}
+			
         </style>
         
-        <script src='js/three.min.js'></script>
-        <!-- <script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js"></script> -->
-        <script src="js/OrbitControls.js"></script>
-        <script src='js/stats.min.js'></script>
-        <script src='js/threex.keyboardstate.js'></script>
-        <script src='js/dat.gui.min.js'></script>
-        
-         <!-- SCRIPT INCLUDES HERE -->
-        <script src="js/jquery-1.9.1.js"></script>
-        <script src="js/jquery-ui.js"></script>
-        <link rel=stylesheet href="css/jquery-ui.css" />
-        <link rel=stylesheet href="css/info.css"/>
-        <script src="js/info.js"></script>
-        
-        <!-- ACCORDIAN SCRIPT -->
-        <script>
-        $(document).ready(function(){
- 
-            activePanel = $("#accordion div.panel:first");
-            $(activePanel).addClass('active');
 
-            $("#accordion").delegate('.panel', 'click', function(e){
-                if( ! $(this).is('.active') ){
-                    $(activePanel).animate({width: "44px"}, 300);
-                    $(this).animate({width: "848px"}, 300);
-                    $('#accordion .panel').removeClass('active');
-                    $(this).addClass('active');
-                    activePanel = this;
-                 };
-            });
-        });
-        </script>
         
     </head>
     <body>
-        
-        <div id="infoButton"></div>
-        <div id="infoBox" title="Demo Information">
-        This three.js demo is part of a collection at
-        <a href="http://www.tform.co.jp">HOWE PRODUCTIONS</a>
-        </div>
-        <!-- main page start here -->
-        <script src='js/scene.js'></script>
-
+		<button onClick="window.open('guiInterface.php', 'BaseWindow5', 'width=1905,height=980, top=0, left=0, resizable=yes')" class='startBtn'><span style='font-size: 11px;'>Product Viewer 3D</span><br>START</button>
+   
         
     </body>
 </html>

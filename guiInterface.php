@@ -20,8 +20,14 @@ body {
 	position: absolute;
 	bottom: 55px;
 	left: 25%;
-	outline: 1px solid;
+	outline: 0px solid;
 	display: none;
+	-webkit-touch-callout: none; 
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #guiBarContentWrapper{
@@ -46,8 +52,8 @@ body {
 	line-height: 40px;
 	margin-bottom: 2px;
 	margin-top: 2px;
-	margni-left: 1px;
-	margin-right: 1px;
+	margni-left: 2px;
+	margin-right: 2px;
 	font-size: 10px;
 }
 
@@ -71,16 +77,19 @@ body {
 	opacity: 0.5;
 }
 
+#guiPrev i, #guiNext i {
+	line-height: 54px;
+}
+
 #guiPrev {
 	position: absolute;
 	left: 0px;
 	width: 10%;
-	height: 100%;
-	line-height: 50px;
+	height: 50px;
 	text-align: center;
 	font-size: 30px;
-	background: #CCC;
-	color: #FFFFFF;
+	background: #FFF;
+	color: #000;
 	cursor: pointer;
 }
 #guiNext {
@@ -88,16 +97,16 @@ body {
 	right: 0px;
 	width: 10%;
 	height: 100%;
-	line-height: 50px;
 	text-align: center;
 	font-size: 30px;
-	background: #CCC;
-	color: #FFFFFF;
+	background: #FFF;
+	color: #000;
 	cursor: pointer;
 }
 
 #guiNext:hover, #guiPrev:hover{
-	background-color: red;
+	
+	color: #AAA;
 }
 
 /* GUIBAR BASE SECTION */
@@ -112,6 +121,12 @@ body {
 	letter-spacing: 10px;
 	font-size: 35px;
 	line-height: 35px;
+	-webkit-touch-callout: none; 
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #guiBarBaseWrapper {
@@ -169,18 +184,68 @@ body {
 					//console.log('downRight');
 				}, 20);
 			});
+
+			
+			$('#guiBarContentWrapper').on( 'DOMMouseScroll mousewheel', function ( event ) {
+			  if( event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0 ) { //alternative options for wheelData: wheelDeltaX & wheelDeltaY
+				//scroll down
+				console.log('Down');
+				div.scrollLeft(div.scrollLeft() + 33);
+			  } else {
+				//scroll up
+				console.log('Up');
+				div.scrollLeft(div.scrollLeft() - 33);
+			  }
+			  //prevent page fom scrolling
+			  
+			  return false;
+			  
+			});
+			
 			$('#guiPrev,#guiNext').on('mouseup mouseleave', function () {
 				clearInterval(iv);
 				//console.log('up or leave');
 			});
 		});
 		
-		// CLOSE DIV
-		$("#guiCloseBtn").click(function () {
+		// Toggle Materials GUI bar
+		$("#materialBtn").click(function () {
 			$('#guiBar').animate({
 				opacity: "toggle",
 				width: "toggle"
 				}, 200, "linear");
+		});
+			// hide gui after choice?
+			$(document).mouseup(function (e)
+{
+				var container = $("#guiBar");
+
+				if (!container.is(e.target) // if the target of the click isn't the container...
+					&& container.has(e.target).length === 0) // ... nor a descendant of the container
+				{
+					container.hide();
+				}
+			});
+		
+		// --------------------------
+		
+		$("#rotateClockwiseBtn").click(function () {
+			alert("CLOCKWISE");
+		});
+		$("#rotateCounterClockwiseBtn").click(function () {
+			alert("COUNTER CLOCKWISE");
+		});
+		$("#screenshotBtn").click(function () {
+			alert("SCREENSHOT");
+		});
+		$("#settingsBtn").click(function () {
+			alert("SETTINGS");
+		});
+		
+		
+		/* toggle button icon changes */
+		$('#dayNightBtn span').click(function(){
+			$(this).find('i').toggleClass('fa-sun-o fa-circle-o')
 		});
 	});
 </script>
@@ -192,7 +257,7 @@ body {
 <?php
 // ----------------------------------------------------------------------------
 //path to directory to scan. i have included a wildcard for a subdirectory
-$directory = "textures/*/";
+$directory = "textures/*/*/";
  
 //get all image files with a .jpg extension.
 $images = glob($directory."*.{gif,jpg,png}", GLOB_BRACE);
@@ -205,7 +270,7 @@ foreach($images as $image){ $imgs[] = "$image"; }
 ?>
 	<div id='guiBar'>
 	
-		<div id='guiPrev' class='guiControlButton'> < </div>
+		<div id='guiPrev' class='guiControlButton '><i class="fa fa-chevron-left"></i></div>
 		
 			<div id='guiBarContentWrapper'>
 				<div id='guiBarItemWrapper'>
@@ -215,7 +280,7 @@ foreach($images as $image){ $imgs[] = "$image"; }
 					//display images
 					foreach ($imgs as $img) {
 						echo "<a href='#'>";
-						echo "<div class='guiItem'><img src='$img' style='width: 100%;' /><span>test</span></div>";
+						echo "<div class='guiItem'><img src='$img' style='width: 100%;' /><span></span></div>";
 						echo "</a>";
 					}
 
@@ -235,15 +300,18 @@ foreach($images as $image){ $imgs[] = "$image"; }
 					?>
 				</div>
 			</div>
-			<div id='guiNext' class='guiControlButton'> > </div>
+			<div id='guiNext' class='guiControlButton'><i class="fa fa-chevron-right"></i></div>
 		
 	</div>
 	<div id='guiBarBase'>
-		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
-		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
-		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
-		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera"></i></span></div>
-		<div id='guiCloseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
+		<div id='materialBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
+		<div id='rotateClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
+		<div id='rotateCounterClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
+		<div id='dayNightBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-sun-o"></i></span></div>
+		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera"></i></span></div>
+		<div id='settingsBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
+		
+		
 	</div>
 <body>
 
