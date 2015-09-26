@@ -119,8 +119,6 @@ body {
 	left: 25%;
 	text-align: center;
 	letter-spacing: 10px;
-	font-size: 35px;
-	line-height: 35px;
 	-webkit-touch-callout: none; 
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -129,6 +127,7 @@ body {
 	user-select: none;
 }
 
+
 #guiBarBaseWrapper {
 	display: inline-block;
 }
@@ -136,16 +135,33 @@ body {
 .guiBaseBtn {
 	width: 35px;
 	height: 35px;
-	background-color: #FFF;
+	background-color: #AAA;
 	display: inline-block;
 	white-space: nowrap;
 	verticle-align: middle;
 }
 
+
+
 .guiBaseBtn:hover {
 	cursor: pointer;
-	
-	
+}
+
+
+.guiBaseBtn span {
+	display: block;
+	padding: 4px;
+    background-color: purple;
+}
+
+
+.guiBaseBtn span i [class*="icon"]{
+	background-color: red;
+    display: block;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+	text-align:center;
 }
 
 /* guiBase buttons animation code */
@@ -162,8 +178,8 @@ body {
 <script src="js/jquery-ui.js"></script>
 <link rel=stylesheet href="css/jquery-ui.css" />
 <link rel=stylesheet href="css/hover.css" /> <!-- CSS3 HOVER EFFECTS -->
+<link rel=stylesheet href="css/font-awesome.css" /> <!-- FONT-AWSOME -->
 
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all"> <!-- FONT AWSOME [Dependencies: HOVER EFFECTS ] -->
 
 <script>
 	$(document).ready(function(){
@@ -303,6 +319,11 @@ foreach($images as $image){ $imgs[] = "$image"; }
 			<div id='guiNext' class='guiControlButton'><i class="fa fa-chevron-right"></i></div>
 		
 	</div>
+	
+
+	
+	
+	
 	<div id='guiBarBase'>
 		<div id='materialBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
 		<div id='rotateClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
