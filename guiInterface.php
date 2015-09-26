@@ -135,7 +135,7 @@ body {
 .guiBaseBtn {
 	width: 35px;
 	height: 35px;
-	background-color: #AAA;
+	background-color: #FFF;
 	display: inline-block;
 	white-space: nowrap;
 	verticle-align: middle;
@@ -151,7 +151,7 @@ body {
 .guiBaseBtn span {
 	display: block;
 	padding: 4px;
-    background-color: purple;
+	font-size: 35px;
 }
 
 
@@ -162,6 +162,7 @@ body {
     width: 100%;
     margin: auto;
 	text-align:center;
+	
 }
 
 /* guiBase buttons animation code */
