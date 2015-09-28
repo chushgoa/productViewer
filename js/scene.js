@@ -10,6 +10,10 @@ var moveSpeed = 0.01;
 
 var projector, mouse = { x: 0, y: 0 }, INTERSECTED; // for mouse over functions
 
+// materials
+var testMaterial;
+
+
 init();
 animate();
 
@@ -71,7 +75,7 @@ function init() {
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.bottom = '0px';
     stats.domElement.style.zIndex = 100;
-    document.body.appendChild( stats.domElement );
+    //document.body.appendChild( stats.domElement );
 
     // LIGHTS ----------------------------------------------------------
     light = new THREE.PointLight(0xffffff, 1, 100);
@@ -97,7 +101,7 @@ function init() {
     /* back wall */
     var backWallGeometry = new THREE.PlaneGeometry(30,10,1,1);
     var backWallMaterial = new THREE.MeshPhongMaterial({
-        color: 0x000fff, 
+        color: 0x00ffff, 
         specular: 0xffffff,
 		shininess: 500,
 		reflectivity: 0,
@@ -137,7 +141,7 @@ function init() {
     
     // wireframe
     wireframe = new THREE.WireframeHelper( sphere, 0x00ff00 );
-    //scene.add(wireframe);
+    scene.add(wireframe);
     
     // axis
     var axis = new THREE.AxisHelper(5); //  will be on top
@@ -203,6 +207,13 @@ function init() {
         //f4.open();
         gui.close();
         
+        /* GUI hooks */
+        var el_rotateClockwise = document.getElementById("rotateClockwiseBtn");
+        el_rotateClockwise.addEventListener('click', guiRotateClockwise, false);
+
+        var el_rotateCounterClockwise = document.getElementById("rotateCounterClockwiseBtn");
+        el_rotateCounterClockwise.addEventListener('click', guiRotateCounterClockwise, false);
+        
     }
     
     // initialize object to perform world/screen calculations
@@ -214,6 +225,19 @@ function init() {
     // render on windown resize ----------------------------------------------------------
     window.addEventListener('resize', onWindowResize, false);
     // -----------------------------------------------------------------------------------
+sphere.material = groundMaterial;
+}
+
+function guiRotateClockwise() {
+    //sphere.rotation.y -= 10;
+    //alert("test");
+    sphere.material = groundMaterial;
+    console.log("change material -" + groundMaterial.name );
+    //sphere.material = new THREE.MeshPhongMaterial({color: 0x00FF00,side: THREE.DoubleSide});
+}
+function guiRotateCounterClockwise() {
+    //sphere.rotation.y += 10;
+    camera.position.y -= 2;
 }
 
 function onDocumentMouseMove( event ) 
@@ -246,7 +270,7 @@ function animate() {
     
     // --------------------------------------------------------------
     // test animation
-    sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
+    //sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
     // --------------------------------------------------------------
     
     render();
@@ -279,7 +303,7 @@ function keyboardControls(){
 
 /* update gui controls */
 function guiControlsUpdate(){
-     spherePos.setFromMatrixPosition(sphere.matrixWorld); //gives the shere world cords so can move it around.
+    spherePos.setFromMatrixPosition(sphere.matrixWorld); //gives the shere world cords so can move it around.
     
     // camera update
     camera.fov = guiControls.fov;

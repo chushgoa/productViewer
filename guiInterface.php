@@ -1,6 +1,13 @@
-<html>
+<!doctype html>
+
+<html lang="en">
 <head>
-<title>GUI Interface</title>
+    <meta charset="utf-8">
+
+    <title>PRODUCT VIEWER 3D</title>
+    <meta name="description" content="PRODUCT VIEWER 3D">
+    <meta name="author" content="SitePoint">
+
 
 <style>
 
@@ -11,8 +18,16 @@
 
 body {
 	width: 100%;
+    font-family: Monospace;
+    font-weight: bold;
+    background-color: #ccccff;
+    margin: 0px;
+    overflow: hidden;
 }
 
+canvas {
+    z-index: 0;
+}
 
 #guiBar {
 	width: 50%;
@@ -21,6 +36,7 @@ body {
 	bottom: 55px;
 	left: 25%;
 	outline: 0px solid;
+    background-color: #FFFFFF;
 	display: none;
 	-webkit-touch-callout: none; 
 	-webkit-user-select: none;
@@ -74,7 +90,7 @@ body {
 }
 
 #guiBarItemWrapper a:hover {
-	opacity: 0.5;
+	opacity: 0.75;
 }
 
 #guiPrev i, #guiNext i {
@@ -135,7 +151,7 @@ body {
 .guiBaseBtn {
 	width: 35px;
 	height: 35px;
-	background-color: #FFF;
+	background-color: none;
 	display: inline-block;
 	white-space: nowrap;
 	verticle-align: middle;
@@ -150,8 +166,8 @@ body {
 
 .guiBaseBtn span {
 	display: block;
-	padding: 4px;
-	font-size: 35px;
+	padding: 2px;
+	font-size: 31px;
 }
 
 
@@ -162,7 +178,6 @@ body {
     width: 100%;
     margin: auto;
 	text-align:center;
-	
 }
 
 /* guiBase buttons animation code */
@@ -245,13 +260,18 @@ body {
 			});
 		
 		// --------------------------
+		/* button function hooks here */
 		
+        /*
 		$("#rotateClockwiseBtn").click(function () {
 			alert("CLOCKWISE");
 		});
+        
 		$("#rotateCounterClockwiseBtn").click(function () {
 			alert("COUNTER CLOCKWISE");
 		});
+        */
+        
 		$("#screenshotBtn").click(function () {
 			alert("SCREENSHOT");
 		});
@@ -262,14 +282,38 @@ body {
 		
 		/* toggle button icon changes */
 		$('#dayNightBtn span').click(function(){
-			$(this).find('i').toggleClass('fa-sun-o fa-circle-o')
+			$(this).find('i').toggleClass('fa-plus-circle fa-minus-circle')
 		});
 	});
 </script>
-	
+    
+<!-- INCLUDES START -->
+        <script src='js/three.min.js'></script>
+        <!-- <script src="https://dl.dropboxusercontent.com/u/3587259/Code/Threejs/OrbitControls.js"></script> -->
+        <script src="js/OrbitControls.js"></script>
+        <script src='js/stats.min.js'></script>
+        <script src='js/threex.keyboardstate.js'></script>
+        <script src='js/dat.gui.min.js'></script>
+        
+         <!-- SCRIPT INCLUDES HERE -->
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <link rel=stylesheet href="css/jquery-ui.css" />
+        <link rel=stylesheet href="css/info.css"/>
+        <script src="js/info.js"></script>
+<!-- INCLUDES END -->
 </head>
 
 <body>
+<!-- popup info START -->
+<div id="infoButton"></div>
+<div id="infoBox" title="Demo Information"> This demo has been produced for TFORM as a product viewer
+<a href="http://www.tform.co.jp">HOWE PRODUCTIONS</a>
+</div>
+<!-- popup info END -->
+    
+<!-- main page start here -->
+<script src='js/scene.js'></script>
 
 <?php
 // ----------------------------------------------------------------------------
@@ -285,13 +329,12 @@ foreach($images as $image){ $imgs[] = "$image"; }
 // ---------------------------------------------------------------------------
 
 ?>
+	<!-- top view of gui bar -->
 	<div id='guiBar'>
-	
 		<div id='guiPrev' class='guiControlButton '><i class="fa fa-chevron-left"></i></div>
 		
 			<div id='guiBarContentWrapper'>
 				<div id='guiBarItemWrapper'>
-				
 				<?php 
 
 					//display images
@@ -300,41 +343,21 @@ foreach($images as $image){ $imgs[] = "$image"; }
 						echo "<div class='guiItem'><img src='$img' style='width: 100%;' /><span></span></div>";
 						echo "</a>";
 					}
-
 				?>
-				
-					<?php 
-					/*
-					// TEST LOOP
-						for($i = 1; $i < 11; $i++){
-							echo "
-							<a href='#'>
-								<div class='guiItem'><span>$i</span></div>
-							</a>
-							";
-						}
-						*/
-					?>
 				</div>
 			</div>
 			<div id='guiNext' class='guiControlButton'><i class="fa fa-chevron-right"></i></div>
-		
 	</div>
-	
-
-	
-	
-	
+	<!-- bottom controls of gui bar -->
 	<div id='guiBarBase'>
 		<div id='materialBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
 		<div id='rotateClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
 		<div id='rotateCounterClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
-		<div id='dayNightBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-sun-o"></i></span></div>
+		<div id='dayNightBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-plus-circle"></i></span></div>
 		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera"></i></span></div>
 		<div id='settingsBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
-		
-		
 	</div>
+	<!-- top controls of gui bar -->
 <body>
 
 </html>

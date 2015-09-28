@@ -15,7 +15,7 @@
                 overflow: hidden;
             }
             canvas {
-                z-index: 0;   
+                z-index: 0;
             }
             
           
@@ -34,27 +34,9 @@
         <link rel=stylesheet href="css/jquery-ui.css" />
         <link rel=stylesheet href="css/info.css"/>
         <script src="js/info.js"></script>
-        
-        <!-- ACCORDIAN SCRIPT -->
-        <script>
-        $(document).ready(function(){
- 
-            activePanel = $("#accordion div.panel:first");
-            $(activePanel).addClass('active');
-
-            $("#accordion").delegate('.panel', 'click', function(e){
-                if( ! $(this).is('.active') ){
-                    $(activePanel).animate({width: "44px"}, 300);
-                    $(this).animate({width: "848px"}, 300);
-                    $('#accordion .panel').removeClass('active');
-                    $(this).addClass('active');
-                    activePanel = this;
-                 };
-            });
-        });
-        </script>
-        
     </head>
+    
+    
     <body>
         
         <div id="infoButton"></div>
