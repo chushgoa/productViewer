@@ -1,121 +1,115 @@
+// ******************************************************************
+// GLOBAL DECLARATIONS
+// ******************************************************************
+
 var camera, controls, scene, renderer, light, stats;
 var ground, groundPos;
-var sphere, spherePos;
+var sphere, spherePos; // test sphere
 var rendererStats;
 var keyboard;
 var guiControls;
 
-var rotationSpeed = 0.05;
-var moveSpeed = 0.01;
+var rotationSpeed = 0.05; // test rotation speed for THREEgui
+var moveSpeed = 0.01; // test moveSpeed for TRHEEgui
 
 var projector, mouse = { x: 0, y: 0 }, INTERSECTED; // for mouse over functions
 
-// materials
-var testMaterial;
-
+// -----------------------------------------------------------------------------
 
 init();
 animate();
 
 function init() {
     
+// ******************************************************************
+// RENDERER ---------------------------------------------------------
+// ******************************************************************
     
-    // info ----------------------------------------------------------
-    /*
-    info = document.createElement('div');
-    info.style.position = 'absolute';
-    info.style.top = '30px';
-    info.style.width = '100%';
-    info.style.textAlign = 'center';
-    info.style.color = '#AAAAAA';
-    info.style.fontWeight = 'bold';
-    info.style.backgroundColor = 'transparent';
-    info.style.zIndex = '2';
-    info.style.fontFamily = 'Monospace';
-    info.innerHTML = 'Product Viewer Alpha 1.1';
-    document.body.appendChild(info);
-    */
-    
-    //GUI ----------------------------------------------------------
-    /*
-    gui = document.createElement('div');
-    gui.style.position = 'absolute';
-    gui.style.bottom = '0';
-    gui.style.width = '200px';
-    gui.style.height = '15px';
-    gui.style.color = '#FFFFFF';
-    gui.style.fontWeight = 'bold';
-    gui.style.background = 'rgba(255, 0, 0, .75)';
-    gui.style.zIndex = '3';
-    gui.fontFamily = 'Monospace';
-    gui.innerHTML = 'testGUI';
-    document.body.appendChild(gui);
-    */
-    
-    // RENDERER ----------------------------------------------------------
     renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMapEnabled = true;
+    renderer.shadowMapType = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
     
-    // SCENE ----------------------------------------------------------
+// ******************************************************************
+// SCENE ------------------------------------------------------------
+// ******************************************************************
+    
     scene = new THREE.Scene();
     
-    // CAMERA ----------------------------------------------------------
-    camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,10000);
-    camera.position.z = 5;
-    camera.position.y = 0;
+// ******************************************************************
+// CAMERA -----------------------------------------------------------
+// ******************************************************************
     
-    // CONTROLS ----------------------------------------------------------
+    camera = new THREE.PerspectiveCamera(50,window.innerWidth/window.innerHeight,0.1,10000);
+    camera.position.z = 4;
+    camera.position.y = 0;
+
+// ******************************************************************
+// CONTROLS ---------------------------------------------------------
+// ******************************************************************
+    
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     //controls.damping = 0.2;
     //controls.addEventListener('change', render);
     
-    // STATS ----------------------------------------------------------
+// ******************************************************************
+// STATS ------------------------------------------------------------
+// ******************************************************************
+    
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.bottom = '0px';
     stats.domElement.style.zIndex = 100;
     //document.body.appendChild( stats.domElement );
 
-    // LIGHTS ----------------------------------------------------------
-    light = new THREE.PointLight(0xffffff, 1, 100);
-    light.position.set(2.5,3,1);
-    scene.add(light);
+// ******************************************************************
+// LIGHTS -----------------------------------------------------------
+// ******************************************************************
     
+    light = new THREE.SpotLight(0xffffff);
+    light.position.set(100,1000,100);
+    scene.add(light);
+    light.castShadow = true;
+    light.shadowDarkness = .2;
+    
+    light.shadowBias = 0.0001;
+    light.shadowMapWidth = 2048;
+    light.shadowMapHeight = 2048;
+
+    light.shadowCameraNear = 1;
+    light.shadowCameraFar = 4000;
+    light.shadowCameraFov = 270;
+    
+    // ----------------------------------------
     lightAmbient = new THREE.AmbientLight(0x404040);
     scene.add(lightAmbient);
 
-    // KEYBOARD ----------------------------------------------------------
+// ******************************************************************
+// KEYBOARD ---------------------------------------------------------
+// ******************************************************************
+    
     keyboard = new THREEx.KeyboardState();
     
-    // OBJECTS ----------------------------------------------------------
+// ******************************************************************
+// OBJECTS ----------------------------------------------------------
+// ******************************************************************
 
     /* ground plane */
-    var groundGeometry = new THREE.PlaneGeometry(30,10,1,1);
-    var groundMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF,side: THREE.DoubleSide});
+    var groundGeometry = new THREE.PlaneGeometry(1000,1000,1,1);
+    var groundMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF,side: THREE.DoubleSide });
     ground = new THREE.Mesh(groundGeometry,groundMaterial);
     ground.rotation.x = Math.PI / 2;
     ground.position.y = -1;
+    ground.receiveShadow = true;
     scene.add(ground);
-    
-    /* back wall */
-    var backWallGeometry = new THREE.PlaneGeometry(30,10,1,1);
-    var backWallMaterial = new THREE.MeshPhongMaterial({
-        color: 0x00ffff, 
-        specular: 0xffffff,
-		shininess: 500,
-		reflectivity: 0,
-        side: THREE.DoubleSide
-    });
-    backWall = new THREE.Mesh(backWallGeometry, backWallMaterial);
-    backWall.position.y = 4;
-    backWall.position.z = -1;
-    scene.add(backWall);
-    
+
     /* testMesh */
-    var sphereGeometry = new THREE.SphereGeometry(1,16,16);
-    var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF,side: THREE.DoubleSide});
+    var sphereGeometry = new THREE.SphereGeometry(1,32,32);
+    var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xaaff00,side: THREE.DoubleSide});
     sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
+    sphere.castShadow = true;
+    //sphere.receiveShadow = true;
     scene.add(sphere);
     scene.updateMatrixWorld(true);
     spherePos = new THREE.Vector3();
@@ -127,9 +121,11 @@ function init() {
     spriteObj.name = "sprite";
     spriteObj.position.set(0,1.5,0);
     spriteObj.scale.set(0.5,0.5,0.5)
-    scene.add(spriteObj);
+    //scene.add(spriteObj);
     
-    // HELPERS ----------------------------------------------------------
+// ******************************************************************
+// HELPERS ----------------------------------------------------------
+// ******************************************************************
     
     // grid
     var size = 10;
@@ -141,7 +137,7 @@ function init() {
     
     // wireframe
     wireframe = new THREE.WireframeHelper( sphere, 0x00ff00 );
-    scene.add(wireframe);
+    //scene.add(wireframe);
     
     // axis
     var axis = new THREE.AxisHelper(5); //  will be on top
@@ -156,9 +152,11 @@ function init() {
     var pointLightHelperSphere = new THREE.PointLightHelper(light, pointLightHelpherShereSize);
     scene.add(pointLightHelperSphere);
     
-    /* HELPERS FINISHED*/
+
+// ******************************************************************
+// GUI --------------------------------------------------------------
+// ******************************************************************
     
-    // GUI ----------------------------------------------------------
     guiControls = new function() {
         /* master variables */
         this.movementSpeed = 0.011; // movement speed
@@ -225,23 +223,25 @@ function init() {
     // render on windown resize ----------------------------------------------------------
     window.addEventListener('resize', onWindowResize, false);
     // -----------------------------------------------------------------------------------
-sphere.material = groundMaterial;
+
 }
 
+// ******************************************************************
+// FUNCTIONS START --------------------------------------------------
+// ******************************************************************
+
+/* bound button to rotate camera clockwise */
 function guiRotateClockwise() {
-    //sphere.rotation.y -= 10;
-    //alert("test");
-    sphere.material = groundMaterial;
-    console.log("change material -" + groundMaterial.name );
-    //sphere.material = new THREE.MeshPhongMaterial({color: 0x00FF00,side: THREE.DoubleSide});
-}
-function guiRotateCounterClockwise() {
-    //sphere.rotation.y += 10;
-    camera.position.y -= 2;
+    //alert("rotate camera clockwise");
 }
 
-function onDocumentMouseMove( event ) 
-{
+/* bound button to rotate camera counter-clockwise */
+function guiRotateCounterClockwise() {
+    //alert("rotate camera counter-clockwise");
+}
+
+/* updates mouse movement */
+function onDocumentMouseMove( event ) {
 	// the following line would stop any other event handler from firing
 	// (such as the mouse's TrackballControls)
 	// event.preventDefault();
@@ -315,17 +315,15 @@ function guiControlsUpdate(){
     sphere.scale.set(guiControls.scale,guiControls.scale,guiControls.scale);
     
     // light position
-    
     light.position.x = guiControls.lightPosX;
     light.position.y = guiControls.lightPosY;
     light.position.z = guiControls.lightPosZ;
     light.intensity = guiControls.lightStrength;
 }
 
-/* update functions */
-function update(){
-    
-    // find intersections
+/* mouse over raycast for the sprite mouseover to highlight what part of mesh you want to change */
+function spriteHover() {
+     // find intersections
 
 	// create a Ray with origin at the mouse position
 	//   and direction into the scene (camera direction)
@@ -367,10 +365,15 @@ function update(){
 			INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
            
 		// remove previous intersection object reference
-		//     by setting current intersection object to "nothing"
+		// by setting current intersection object to "nothing"
 		INTERSECTED = null;
 	}
+}
+
+/* update functions */
+function update(){
     
+    spriteHover(); // update the sprite hover mouseover
     guiControlsUpdate(); // update gui control changes
     keyboardControls(); // update keyboard controls
     controls.update(); // updates the mouse move controls.

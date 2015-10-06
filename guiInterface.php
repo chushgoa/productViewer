@@ -336,7 +336,6 @@ foreach($images as $image){ $imgs[] = "$image"; }
 			<div id='guiBarContentWrapper'>
 				<div id='guiBarItemWrapper'>
 				<?php 
-
 					//display images
 					foreach ($imgs as $img) {
 						echo "<a href='#'>";

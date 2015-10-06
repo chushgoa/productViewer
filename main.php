@@ -1,6 +1,12 @@
-<html>
-    <head>
-        <title>GUI Test Page</title>
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>PRODUCT VIEWER 3D</title>
+    <meta name="description" content="PRODUCT VIEWER 3D">
+    <meta name="author" content="SitePoint">
         <style>
             * {
                 margin: 0;
