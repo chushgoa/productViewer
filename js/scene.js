@@ -14,7 +14,7 @@ var sphere, sphereGeometry, spherePos; // test sphere
 var box; // set the center calculation (not helper version)
 var testObj;
 /* MATERIALS */
-var material01;
+var material01, material02;
 
 /* LIGHTS and SHADOWS */
 var bulbLight, bulbMat, stats, hemiLight;
@@ -103,7 +103,7 @@ manager.onLoad = function(){
 	//console.log(box.center(controls.target));
 
 	camera.lookAt(box.center(controls.target));
-
+THREEx.Screenshot.bindKey(renderer);
 	animate();
 
 	$("#loadingScreen").fadeOut(500, function(){});
@@ -123,7 +123,11 @@ function init() {
     // ******************************************************************
     // RENDERER ---------------------------------------------------------
     // ******************************************************************
-		renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
+		renderer = new THREE.WebGLRenderer({
+			alpha: true,
+			antialias: true,
+			preserveDrawingBuffer   : true   // required to support .toDataURL() for screeenshot
+	});
 	} else {
 		renderer = new THREE.CanvasRenderer();
 	}
@@ -157,7 +161,7 @@ function init() {
 // ******************************************************************
 
     camera = new THREE.PerspectiveCamera(50, canvasBlock.offsetWidth/canvasBlock.offsetHeight, 0.001, 20000);
-    camera.position.set(1,1.25,1);
+    camera.position.set(0,1,1);
 
 
 // ******************************************************************
@@ -181,7 +185,7 @@ function init() {
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.bottom = '0px';
     stats.domElement.style.zIndex = 100;
-    document.body.appendChild( stats.domElement );
+    //document.body.appendChild( stats.domElement );
 
 // ******************************************************************
 // LIGHTS -----------------------------------------------------------
@@ -265,16 +269,8 @@ function init() {
 		// ********************************************************
 	// GUI
 	// ********************************************************
-	var gui = new dat.GUI();
 
-				gui.add( params, 'hemiIrradiance', Object.keys( hemiLuminousIrradiances ) );
-				gui.add( params, 'bulbPower', Object.keys( bulbLuminousPowers ) );
-				gui.add( params, 'exposure', 0, 1 );
-				gui.add( params, 'shadows' );
-				gui.open();
 	// ********************************************************
-
-
 
     window.onload = function(){
         var gui = new dat.GUI();
@@ -301,6 +297,11 @@ function init() {
         f5.add(guiControls, 'lightPosZ', -5, 5);
         f5.add(guiControls, 'lightStrength', 0, 5);
 
+				var f6 = gui.addFolder("lights and shadows");
+				f6.add( params, 'hemiIrradiance', Object.keys( hemiLuminousIrradiances ) );
+				f6.add( params, 'bulbPower', Object.keys( bulbLuminousPowers ) );
+				f6.add( params, 'exposure', 0, 1 );
+				f6.add( params, 'shadows' );
 
         //f1.open();
         //f2.open();
@@ -410,7 +411,7 @@ function addMaterials() {
 	var loadedTextureName = textureUrl + textureName;
 	var textureExtention = ".png";
 	var textureWrappingAmount = 5; // texture wrapping amount (tiling)
-	var tempName = "textures/testTextures/fabric/fabric_beige.jpg";
+	var tempName = "textures/testTextures/wood/Melamine-wood-001/Melamine-wood-001.png";
 
 	var textureLoader = new THREE.TextureLoader(manager); // texture loader
 	// materials
@@ -454,6 +455,15 @@ function addMaterials() {
 
 	// textured material
 	material01 = new THREE.MeshPhongMaterial({
+		map: textureDiffuse,
+		specular: 0xffffff,
+		shininess: 10,
+		reflectivity: 0,
+			side: THREE.DoubleSide
+	});
+
+	// textured material
+	material02 = new THREE.MeshPhongMaterial({
 		map: textureDiffuse,
 		specular: 0xffffff,
 		shininess: 10,
@@ -667,20 +677,19 @@ function addLoaders(){
   	object.name="myGroup";
 
   	// seat
-  	object.children[0].material = new THREE.MeshPhongMaterial({color: 0x7fa22b, specular: 0xcccccc, shininess: 10, reflectivity: 10, side: THREE.DoubleSide});
+  	object.children[0].material = material01
 
   	// bolts
   	object.children[1].material = new THREE.MeshPhongMaterial({color: 0xffffff, reflectivity: 1, side: THREE.DoubleSide});
 
   	// backrest
-  	object.children[2].material = new THREE.MeshPhongMaterial({color: 0x7fa22b, specular: 0xcccccc, shininess: 10, reflectivity: 10, side: THREE.DoubleSide});
-  	//object.children[2].material = material01;
+  	object.children[2].material = material01;
 
   	// frameRim
-  	object.children[3].material = material01;
+  	object.children[3].material = material02;
 
   	// frameLegs
-  	object.children[4].material = material01;
+  	object.children[4].material = material02;
 
   	// footPads
   	object.children[5].material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xcccccc, shininess: 0.1, reflectivity: 0.1, side: THREE.DoubleSide});
@@ -838,7 +847,7 @@ function animate() {
     // test animation
     // sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
     // --------------------------------------------------------------
-
+testObj.rotation.y += 0.005;
     render();
     update();
 

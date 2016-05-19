@@ -220,6 +220,7 @@
 <script src="js/info.js"></script><!-- INFO ABOUT PROGRAM IN A POPUP -->
 <script src="js/Detector.js"></script><!-- Detects if if browswer is using WebGL -->
 <script src="js/Raycaster.js"></script><!-- RAYCASTER FOR THE INTERSECTIONS -->
+<script src="js/THREEx.screenshot.js"></script><!-- SCREEN SHOT -->
 <!-- INCLUDES END -->
 
 <!-- ON DOC READY -->
@@ -298,7 +299,7 @@
         */
 
 		$("#screenshotBtn").click(function () {
-			alert("SCREENSHOT");
+			//alert("SCREENSHOT");
 		});
 		$("#settingsBtn").click(function () {
 			alert("SETTINGS");
@@ -307,7 +308,7 @@
 
 		/* toggle button icon changes */
 		$('#dayNightBtn span').click(function(){
-			$(this).find('i').toggleClass('fa-plus-circle fa-minus-circle')
+			$(this).find('i').toggleClass('fa-pause fa-play')
 		});
 	});
 </script>
@@ -368,8 +369,8 @@ foreach($images as $image){ $imgs[] = "$image"; }
 		<div id='materialBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
 		<div id='rotateClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
 		<div id='rotateCounterClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
-		<div id='dayNightBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-plus-circle"></i></span></div>
-		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera"></i></span></div>
+		<div id='dayNightBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-pause"></i></span></div>
+		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera-retro"></i></span></div>
 		<div id='settingsBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
 	</div>
 	<!-- top controls of gui bar -->
@@ -378,7 +379,8 @@ foreach($images as $image){ $imgs[] = "$image"; }
 	<!-- main page start here -->
 <!--<script src='js/scene.js'></script>-->
 <div id="canvasWrapper">
-  <div id="canvasBlock" style="width: 95%; height: 500px; margin: auto; background-color: #CCC;">
+  <div id="canvasBlock" style="width: 300px; height: 450px; margin: auto; background-color: #CCC;">
+    <img src="textures/logo/logoHussl.png" style='width: 20%; height; 20%; margin-top: 10px; margin-left: 10px;'>
     <script src='js/scene.js'></script>
   </div>
 </div>
