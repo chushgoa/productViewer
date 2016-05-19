@@ -1,0 +1,77 @@
+@charset "UTF-8";
+/*This style is for "www.tform.co.jp".*/
+
+
+.scrollFadeView {
+	position: fixed;
+	z-index: 8888888888;
+	_text-align: right; /*IE6以下のハック*/
+	_clear: both; /*IE6以下のハック*/;
+}
+
+.scrollFadeView a.topBtn {
+	display: block;
+	width: 1.3em;
+	height: 1.3em;
+	line-height: 1;
+	padding: 0.5em;
+	position: fixed;
+	bottom: 4.6em;
+	right: 1.2em;
+	filter: alpha(opacity=30); -moz-opacity: 0.3; -webkit-opacity: 0.3; opacity: 0.3;
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+	_float: right; /*IE6以下のハック*/
+}
+.scrollFadeView a.topBtn:hover {
+	padding-bottom: 1.2em;
+	filter: alpha(opacity=80); -moz-opacity: 0.8; -webkit-opacity: 0.8; opacity: 0.8;
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+.scrollFadeView a.topBtn img { width: 100%; }
+
+.scrollFadeView a.prevBtn {
+	display: block;
+	width: 1.3em;
+	height: 1.3em;
+	line-height: 1;
+	padding: 0.5em;
+	position: fixed;
+	bottom: 4.6em;
+	right: 3.5em;
+	filter: alpha(opacity=30); -moz-opacity: 0.3; -webkit-opacity: 0.3; opacity: 0.3;
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+.scrollFadeView a.prevBtn:hover {
+	padding-right: 1.2em;
+	filter: alpha(opacity=70); -moz-opacity: 0.8; -webkit-opacity: 0.8; opacity: 0.8;
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+.scrollFadeView a.prevBtn img { width: 100%; }
+
+/*画面横幅が845px（フッター1行の横幅）以下の場合*/
+@media only screen and (max-width: 845px) {
+	.scrollFadeView a.topBtn {
+		width: 1.4em;
+		height: 1.4em;
+		padding: 0.7em;
+		bottom: 0.6em;
+		right: 1.2em;
+	}
+	.scrollFadeView a.prevBtn {
+		width: 1.4em;
+		height: 1.4em;
+		padding: 0.7em;
+		bottom: 0.6em;
+		right: 4em;
+	}
+}
+/*画面横幅が568px以下の場合*/
+/*iPhone5のlandscapeモード（横向き）は含まれる*/
+@media only screen and (max-width: 568px) {
+	.scrollFadeView a.topBtn {
+		width: 1.5em;
+		height: 1.5em;
+		bottom: 0.7em;
+	}
+	.scrollFadeView a.prevBtn { display: none; }
+}

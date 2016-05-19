@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/*折り畳み部分を隠す*/
+ul.sidr-class-accordion ul { display: none; }
+
+/*汎用*/
+ul.sidr-class-accordion div.sidr-class-menuForSidr { display: block; }
+ul.sidr-class-accordion a { display: block; color: #666666; }
+ul.sidr-class-accordion a:hover { color: ; }
+
+/*トリガー*/
+ul.sidr-class-accordion > li > div { padding: 19px 10px; cursor: pointer; } /*１段目の開閉トリガー*/
+ul.sidr-class-accordion > li > div:hover { /*現在未使用*/ } /*１段目の開閉トリガー（ホーバー時）*/
+ul.sidr-class-accordion > li > div > span { display: block; font-weight: 600; color: #666666; } /*１段目の開閉トリガーの文字*/
+ul.sidr-class-accordion > li > div:hover > span { color: #333333; } /*１段目の開閉トリガーの文字（ホーバー時）*/
+ul.sidr-class-accordion > li > ul > li > div { padding: 13px 13px 13px 45px; cursor: pointer; } /*２段目の開閉トリガー*/
+ul.sidr-class-accordion > li > ul > li > div:hover { /*現在未使用*/ } /*２段目の開閉トリガー（ホーバー時）*/
+ul.sidr-class-accordion > li > ul > li > div > span { font-size: 93%; } /*2段目の開閉トリガーの文字*/
+ul.sidr-class-accordion > li > ul > li > div:hover > span { color: #333333; } /*2段目の開閉トリガーの文字（ホーバー時）*/
+ul.sidr-class-accordion > li > ul > li > div:hover > span > small { color: #FFA500; font-size: 80%; filter: alpha(opacity=100); -moz-opacity: 1; -webkit-opacity: 1; opacity: 1; } /*2段目の開閉トリガーのサブ文字（ホーバー時）*/
+ul.sidr-class-accordion > li > ul > li > ul > li > div { padding: 13px 13px 13px 62px; cursor: pointer; } /*3段目の開閉トリガー*/
+ul.sidr-class-accordion > li > ul > li > ul > li > div > span { font-size: 85%;  } /*3段目の開閉トリガーの文字*/
+ul.sidr-class-accordion > li > ul > li > ul > li > div:hover > span { color: #FFA500; } /*3段目の開閉トリガーの文字（ホーバー時）*/
+
+/*背景*/
+ul.sidr-class-accordion > li > ul > li { /*現在未使用*/ } /*２段目の背景*/
+ul.sidr-class-accordion > li > ul > li > ul > li { /*現在未使用*/ } /*３段目の背景*/
+
+/*アイコン*/
+ul.sidr-class-accordion > li > div span {
+	background-image: url("../images/common_theme/menu_minus-trans.png"); background-repeat: no-repeat; background-size: 15px auto; background-position: 12px center; padding-left: 24px;
+	-moz-background-size: 15px auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+} /*１段目（タップ部分・閉じているとき）のアイコン*/
+ul.sidr-class-accordion > li > div span.open {
+	background-image: url("../images/common_theme/menu_plus-trans.png"); color: #000000;
+} /*１段目（タップ部分・開いているとき）のアイコンと文字*/
+ul.sidr-class-accordion > li > ul > li > div span {
+	/*background-image: url("../images/common_theme/menu_minus-trans.png"); background-repeat: no-repeat; background-size: 15px auto; background-position: 33px center;*/
+} /*２段目（タップ部分・閉じているとき）のアイコン*/
+ul.sidr-class-accordion > li > ul > li > div span.open {
+	/*background-image: url("../images/common_theme/menu_plus-trans.png");*/ color: #000000;
+} /*２段目（タップ部分・開いているとき）のアイコンと文字*/
+ul.sidr-class-accordion > li > ul > li > div span.open small {
+	color: #FFA500; font-size: 80%; font-weight: 400; filter: alpha(opacity=100); -moz-opacity: 1; -webkit-opacity: 1; opacity: 1;
+} /*２段目（タップ部分・開いているとき）のサブ文字*/
+ul.sidr-class-accordion > li > ul > li > ul > li > div span.open {
+	/*background-image: url("../images/common_theme/menu_minus-trans.png");*/ color: #000000;
+} /*3段目（タップ部分・開いているとき）のアイコンと文字*/
+
+/*リンク部分*/
+ul.sidr-class-accordion > li > a { /*現在未使用*/ } /*１段目のリンク部分*/
+ul.sidr-class-accordion > li > ul > li > a { font-size: 93%; padding: 14px 14px 14px 45px; } /*２段目のリンク部分*/
+ul.sidr-class-accordion > li > ul > li > ul > li > a { font-size: 85%; padding: 14px 14px 14px 62px; } /*３段目のリンク部分*/
+ul.sidr-class-accordion > li > ul > li > ul > li > ul > li > a { font-size: 77%; padding: 14px 14px 14px 75px; } /*4段目のリンク部分*/
+
+/*jquery.droppy.js専用のメニューを隠す*/
+ul.sidr-class-accordion a.sidr-class-menuForDroppy { display: none !important; }
+
+/*4段目のメニューを隠す（現在jquery.sidr.min.jsでは未使用のため）*/
+ul.sidr-class-accordion li.sidr-class-moreMenu > div,
+ul.sidr-class-accordion li.sidr-class-moreMenu > ul { display: none; }
+
+/*$globalNaviによるサイドナビの取得*/
+ul.sidr-class-accordion > li > div span.sidr-class-on { color: #000000; }

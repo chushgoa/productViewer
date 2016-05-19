@@ -1,0 +1,41 @@
+@charset "UTF-8";
+/*This style is for "www.tform.co.jp/new/".*/
+
+ol#topicPath li.newsTitleTopic { width: 10em; height: 20px; overflow: hidden; margin-right: 0; }
+.recordWrapTop { border-bottom: 1px solid #ebebeb; }
+span.hitCount { /* display: none; */ }
+div#container.newsContents { width: 80%; float: left; }
+.oneNews { display: inline-block; width: 95%; padding: 3% 2.5%; padding-bottom: 5%; border-bottom: 1px solid #ebebeb; }
+.oneNews h1 { font-size: 1.7em; line-height: 1.4em; font-weight: 400; margin-bottom: 1.2em; color: #333; } /* font-weight: 200;( Noto Sans JP ) */
+.oneNews h1 span.date { font-size: 60%; }
+.oneNews div.textBox { width: 55%; float: left; margin-right: 5%; }
+.oneNews div.textBox p { font-size: 103%; line-height: 1.8em; text-align: justify; margin-bottom: 1em; text-justify: inter-ideograph; }
+.oneNews div.photoBox { width: 40%; float: left; }
+.oneNews div.photoBox img { width: 100%; }
+.oneNews ul li { margin: 1em 0; }
+.oneNews a:hover img { filter: alpha(opacity=60); -moz-opacity: 0.6; -webkit-opacity: 0.6; opacity: 0.6; }
+
+#topic { float: left; width: 20%; overflow: hidden; position: relative; }
+#topicTitle { color: #333; font-size: 82%; line-height: 1.8em; margin-bottom: 0.5em; }
+#topic ul { border-left: 1px solid #EBEBEB; padding-bottom: 0.75em; padding-left: 7%; margin-left: 12%; }
+#topic ul li a { display: block; font-size: 92%; border-bottom: 1px solid #EBEBEB; padding: 0.5em; margin-bottom: 1em; line-height: 1.5em; }
+#topic ul li a:hover { background: #FAFAFA; }
+
+#continue { display: none; position: absolute; bottom: 0; left: 0; width: 81%; padding: 1em 0; padding-left: 7%; margin-left: 12%; text-align: center; background: #FFF; }
+#continue.under { bottom: -0.75em; padding: 0; padding-left: 7%; }
+#continue a { display: block; font-size: 92%; }
+#continue a .open { display: block; }
+#continue a img { width: 1.2em; margin-right: 5px; vertical-align: top; }
+#continue a .close img { vertical-align: middle; }
+#continue a .close { display: none; }
+#topic.newsAll { height: auto !important; overflow: visible; }
+
+
+@media only screen and (max-width: 960px) {
+	div#container.newsContents { width: 100%; float: none; display: inline-block; }
+	#topic  { width: 100%; float: none; display: inline-block; /*height: 300px !important;*/ }
+	#topic ul { padding-left: 0; margin-left: 0; border-left: none; }
+	#continue { padding-left: 0; margin-left: 0; width: 100%; /*display: block !important;*/ }
+	.oneNews div.textBox { width: 100%; display: inline-block; float: none; margin-right: 0; }
+	.oneNews div.photoBox { width: 85%; float: none; margin: 3em auto; max-width: 480px; }
+}

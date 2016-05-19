@@ -1,0 +1,190 @@
+@charset "UTF-8";
+
+/*サイドメニューのスタイル*/
+.sidr {
+	display: none;
+	position: absolute;
+	position: fixed;
+	top:0;
+	height:100%;
+	z-index: 999999;
+	width: 260px;
+	overflow-x: none;
+	overflow-y: auto;
+	background: #F8F8F8;
+	-webkit-box-shadow: inset 0 0 5px 5px #EBEBEB;
+	-moz-box-shadow: inset 0 0 5px 5px #EBEBEB;
+	box-shadow: inset 0 0 5px 5px #EBEBEB;
+	font-size: 16px;
+}
+.sidr .sidr-inner { padding-bottom: 15px }
+.sidr.right { left: auto; right: -260px; } /*初期設定なので触らない*/
+.sidr.left { left: -260px; right: auto; } /*初期設定なので触らない*/
+
+.sidr ul { border-top:1px solid #DFDFDF; border-bottom:1px solid #FFFFFF; margin: 68px 0; }
+.sidr ul li { border-top:1px solid #FFFFFF; border-bottom:1px solid #DFDFDF; }
+
+.sidr ul div:hover,
+.sidr ul li:hover > a,
+.sidr ul li:hover > span,
+.sidr ul li.active > a,
+.sidr ul li.active > span,
+.sidr ul li.sidr-class-active > a,
+.sidr ul li.sidr-class-active > span {
+	-webkit-box-shadow: inset 0 0 15px 3px #EBEBEB;
+	-moz-box-shadow: inset 0 0 15px 3px #EBEBEB;
+	box-shadow: inset 0 0 15px 3px #EBEBEB;
+}
+
+.sidr ul li ul { border-bottom: none; margin: 0; }
+
+.sidr ul li ul li:last-child { border-bottom: none; }
+
+.sidr ul li ul li:hover,
+.sidr ul li ul li.active,
+.sidr ul li ul li.sidr-class-active { border-top: none; padding-top: 1px; }
+
+.sidr ul li ul li:hover>a,
+.sidr ul li ul li:hover>span,
+.sidr ul li ul li.active>a,
+.sidr ul li ul li.active>span,
+.sidr ul li ul li.sidr-class-active>a,
+.sidr ul li ul li.sidr-class-active>span {
+	-webkit-box-shadow: inset 0 0 15px 3px #ebebeb;
+	-moz-box-shadow:inset 0 0 15px 3px #ebebeb; 
+	box-shadow: inset 0 0 15px 3px #ebebeb;
+}
+
+/*検索フォームのスタイル*/
+.sidr form { margin: 21px; min-width: 150px; position: absolute; top: 0; }
+
+/*検索セレクトのスタイル*/
+.sidr form div#sidr-id-selectBox {
+	display: none;
+	position: absolute;
+	margin-top: 28px;
+	background: #666666;
+	padding: 2px;
+	width: 156px;
+	text-align: center;
+	z-index: 88888888888;
+	filter: alpha(opacity=90); -moz-opacity: 0.9; -webkit-opacity: 0.9; opacity: 0.9;
+}
+.sidr form div#sidr-id-selectBox p {
+	font-size: 12px;
+	line-height: 2em;
+	color: #FFF;
+}
+.sidr form div#sidr-id-selectBox select {
+	width: 156px;
+	padding: 3px 7px 3px 3px; /*IEとFirefoxのための微調整*/
+	background: #666666;
+	color: #EFEFEF;
+	font-size: 93%;
+	background-image: url("../images/common_theme/selectBtn.png"); 
+	background-repeat: no-repeat; 
+	background-size: 13px auto;
+	-moz-background-size: 13px auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+	background-position: 134px 4px;
+}
+.sidr form div#sidr-id-selectBox select:hover {
+	color: #333333; 
+	background: #EEEEEE;
+	background-image: url("../images/common_theme/selectBtn_on.png"); 
+	background-repeat: no-repeat; 
+	background-size: 13px auto;
+	-moz-background-size: 13px auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+	background-position: 134px 4px;
+}
+
+/*検索マニュアルのスタイル*/
+.sidr form div#sidr-id-selectBox ul { display: inline-block; width: 100%; margin: 0.3em 0 0 0; border: none; }
+.sidr form div#sidr-id-selectBox ul li { margin: 0.3em 0 0 0; border: none; text-align: center; }
+.sidr form div#sidr-id-selectBox ul li a { display: block; font-size: 69%; padding: 3px; color: #EFEFEF; }
+.sidr form div#sidr-id-selectBox ul li a:hover { background: #EEEEEE; color: #333333; }
+.sidr form div#sidr-id-selectBox ul li a small { font-size: 93%; padding-left: 0.1em; }
+
+/*検索セレクトボックスを閉じるトリガー*/
+.sidr form div#sidr-id-selectBoxClose { text-align: right; padding: 0 10px 5px 10px; cursor: pointer; }
+.sidr form div#sidr-id-selectBoxClose a { display: block; font-size: 108%; color: #EEEEEE; }
+.sidr form div#sidr-id-selectBoxClose a:hover { font-weight: bold; color: #FFFFFF; }
+
+/*セレクト初期設定リセット*/
+.sidr form div#sidr-id-selectBox select {
+	border: none !important;
+		-webkit-border-radius: 0;
+	border-radius: 0 !important;
+		-webkit-appearance: none;
+	appearance: none !important;
+}
+
+/*検索インプット入力窓のスタイル*/
+.sidr form input#sidr-id-keywords {
+	width: 123px; /*123px+2px+2px+33px=160px*/
+	height: 20px;
+	padding: 2px;
+	background: #DDDDDD;
+	border: none;
+	color: #666666; /*jQueryを使用する場合でも必要*/
+	font-size: 88%;
+	float: left;
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+.sidr form input#sidr-id-keywords:focus {
+	background: #666666;
+	color: #FFFFFF; /*jQueryを使用する場合でも必要*/
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+
+/*検索インプット送信ボタンのスタイル*/
+.sidr form input#sidr-id-searchBtn {
+	height: 24px;
+	filter: alpha(opacity=60); -moz-opacity: 0.6; -webkit-opacity: 0.6; opacity: 0.6;
+}
+.sidr form input#sidr-id-searchBtn:hover {
+	filter: alpha(opacity=90); -moz-opacity: 0.9; -webkit-opacity: 0.9; opacity: 0.9;
+}
+
+/*インプット初期設定リセット*/
+.sidr form input {
+	border: none !important;
+		-moz-border-radius: 0;
+		-ms-border-radius: 0;
+		-o-border-radius: 0;
+		-webkit-border-radius: 0;
+	border-radius: 0 !important;
+		-moz-appearance: none;
+		-ms-appearance: none;
+		-o-appearance: none;
+		-webkit-appearance: none;
+	appearance: none !important;
+}
+
+/*サイドメニューを閉じるトリガー*/
+.sidr div#sidr-id-menuClose {
+	display: block;
+	width: 27px;
+	height: 18px;
+	padding: 2px;
+	position: absolute;
+	right: 21px;
+	top: 21px;
+	text-align: center;
+	background: #FCFCFC;
+	border: solid 1px #EBEBEB;
+}
+.sidr div#sidr-id-menuClose a {
+	display: block; 
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	font-size: 116%;
+	line-height: 18px;
+	color: #A3A3A3;
+}
+.sidr div#sidr-id-menuClose:hover {
+	border: solid 1px #DDDDDD;
+	-webkit-box-shadow: inset 0 0 5px 3px #EBEBEB;
+	-moz-box-shadow: inset 0 0 5px 3px #EBEBEB;
+	box-shadow: inset 0 0 5px 3px #EBEBEB;
+}
+.sidr div#sidr-id-menuClose:hover a { color: #299DBC; }

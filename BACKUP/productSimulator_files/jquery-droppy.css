@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+/*初期設定（変更しないでください）*/
+.droppy { display: block; margin: 0; padding: 0; position: relative; }
+.droppy li { display: block; list-style: none; margin: 0; padding: 0; float: left; position: relative; }
+.droppy a { display: block; }
+.droppy ul { display: none; position: absolute; left: 0; margin: 0; padding: 0; }
+* html .droppy ul { line-height: 0; } /* IE6 "fix" */
+.droppy ul a { zoom: 1; } /* IE6/7 fix */
+.droppy ul li { float: none; }
+.droppy ul ul { top: 0; }
+
+/*テーマに応じたカスタム設定*/
+.droppy ul { width: 150px; padding-top: 3px/*marginだとバグが発生する*/; }
+.droppy ul ul { left: 151px; padding-top: 0px; }
+.droppy *:hover { background-color: none; } /*プルダウンJSのためのリセット*/
+/*.droppy ul { top: 25px; } 入れ子のプルダウンを1番目に使うときは使用禁止（マウスオーバー時にバグが発生するため）*/
+
+/*プルダウンメニューの中の文字-ここから*/
+.droppy ul a { font-size: 93%; line-height: 1; color: #FFFFFF; border-right: 1px solid #FFFFFF; padding: 6px; }
+/* IE9ハック*/
+.droppy ul a { padding-top: 10px\9; }
+/*IE10,11ハック*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.droppy ul a:not(:target) {
+		padding-top: 10px\9; /* IE10に対応*/
+		padding-top: 10px; /* IE11に対応*/
+	}
+}
+/*プルダウンメニューの中の文字-終わり*/
+
+.droppy ul a.has-subnav { background-color: ; }
+.droppy ul a.hover { background-color: ; color: #FFFFFF; }
+.droppy ul a { border-bottom: 1px solid white; border-right: none; filter: alpha(opacity=90); -moz-opacity: 0.9; -webkit-opacity: 0.9; opacity: 0.9; }
+.droppy ul li a { background-color: #5E5A5A; }
+
+/*IE7以下のハック*/
+.droppy ul a { /line-height: 1.5em; /padding: 3px 6px; }
+
+/*.droppy ul a { border-bottom: none; } ※もしIE6/7で必要になれば使用*/

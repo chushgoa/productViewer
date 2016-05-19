@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+/*検索フォームのスタイル*/
+form#searchform {
+	float: left;
+	height: 20px;
+	min-width: 130px;
+	margin-top: 0.7em;
+}
+
+/*検索セレクトのスタイル*/
+form#searchform div#selectBox {
+	display: none;
+	position: absolute;
+	margin-top: 28px;
+	background: #666666;
+	padding: 1px;
+	width: 130px;
+	text-align: center;
+	z-index: 88888888888;
+	filter: alpha(opacity=90); -moz-opacity: 0.9; -webkit-opacity: 0.9; opacity: 0.9;
+	/margin-left: -102px; /*IE7以下のハック*/
+}
+
+form#searchform div#selectBox p {
+	text-align: left;
+	color: #FFF;
+	font-size: 92%;
+	padding: 0.3em;
+}
+
+/*
+form#searchform div#selectBox select {
+	width: 128px;
+	padding: 3px 4px 3px 3px; /*IEとFirefoxのための微調整*/
+/*background: #666666;
+	color: #EFEFEF;
+	font-size: 93%;
+	background-image: url("../images/common_theme/selectBtn.png");
+	background-image: url("../images/common_theme/selectBtn_ie8.png")\9; /*IE8以下のハック（このプロパティのみ何故かIE9以上には効かないので好都合）*/
+/*background-repeat: no-repeat;
+	background-size: 12px auto;
+	-moz-background-size: 12px auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+/*background-position: 109px 3px;
+}
+/*
+form#searchform div#selectBox select:hover {
+	color: #333333; 
+	background: #EEEEEE;
+	background-image: url("../images/common_theme/selectBtn_on.png");
+	background-image: url("../images/common_theme/selectBtn_ie8_on.png")\9; /*IE8以下のハック（このプロパティのみ何故かIE9以上には効かないので好都合）*/
+/*background-repeat: no-repeat;
+	background-size: 12px auto;
+	-moz-background-size: 12px auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+/*background-position: 109px 3px;
+}
+*/
+
+/*検索マニュアルのスタイル*/
+form#searchform div#selectBox ul { display: inline-block; width: 100%; margin-top: 0.3em; }
+form#searchform div#selectBox ul li { margin-top: 0.1em; border: none; text-align: left; }
+form#searchform div#selectBox ul li a { display: block; font-size: 77%; padding: 1px 3px; color: #EFEFEF; }
+form#searchform div#selectBox ul li a:hover { background: #EEEEEE; color: #333333; }
+form#searchform div#selectBox ul li a small { font-size: 93%; padding-left: 0.1em; }
+
+/*検索セレクトボックスを閉じるトリガー*/
+form#searchform div#selectBoxClose { text-align: right; padding: 0 8px; cursor: pointer; }
+form#searchform div#selectBoxClose a { display: block; font-size: 108%; color: #EEEEEE; }
+form#searchform div#selectBoxClose a:hover { font-weight: bold; color: #FFFFFF; }
+
+/*セレクト初期設定リセット*/
+form#searchform div#selectBox select {
+	border: none !important;
+		-webkit-border-radius: 0;
+	border-radius: 0 !important;
+		-webkit-appearance: none;
+	appearance: none !important;
+}
+
+/*検索インプット入力窓のスタイル*/
+form#searchform input#keywords {
+	width: 98px; /*98px+2px+2px+28px=130px*/
+	height: 16px;
+	padding: 2px;
+	background: #DDDDDD;
+	color: #666666; /*jQueryを使用する場合でも必要*/
+	font-size: 93%;
+	line-height: 1.6em; /* 2014.12.27 追加 */
+	float: left;
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+	_margin-right: -3px; /*IE6以下のハック*/
+}
+/* IE9ハック */
+form#searchform input#keywords { padding: 1px 2px 3px 2px \9; }
+/* IE10,11ハック */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	form#searchform input#keywords:not(:target) {
+		padding: 1px 2px 3px 2px \9; /* IE10に対応 */
+		padding: 1px 2px 3px 2px; /* IE11に対応 */
+	}
+}
+
+form#searchform input#keywords:hover {
+	background: #666666;
+	color: #FFFFFF !important; /*jQueryを使用する場合でも必要*/
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+form#searchform input#keywords:focus {
+	/*width: 126px;　※現在未使用（126px+2px+2px+28px=158px）*/
+	background: #333333;
+	color: #FFFFFF !important; /*jQueryを使用する場合でも必要*/
+	transition-duration: 0.3s; -webkit-transition-duration: 0.3s; -moz-transition-duration: 0.3s; -o-transition-duration: 0.3s; -ms-transition-duration: 0.3s;
+}
+
+/*検索インプット送信ボタンのスタイル*/
+form#searchform input#searchBtn {
+	height: 20px;
+	filter: alpha(opacity=60); -moz-opacity: 0.6; -webkit-opacity: 0.6; opacity: 0.6;
+}
+form#searchform input#searchBtn:hover {
+	filter: alpha(opacity=90); -moz-opacity: 0.9; -webkit-opacity: 0.9; opacity: 0.9;
+}
+
+/*インプット初期設定リセット*/
+form#searchform input {
+	border: none !important;
+		-moz-border-radius: 0;
+		-ms-border-radius: 0;
+		-o-border-radius: 0;
+		-webkit-border-radius: 0;
+	border-radius: 0 !important;
+		-moz-appearance: none;
+		-ms-appearance: none;
+		-o-appearance: none;
+		-webkit-appearance: none;
+	appearance: none !important;
+}

@@ -1,0 +1,339 @@
+@charset "UTF-8";
+
+/*画面横幅（縦幅）がhoge比率の場合*/
+
+/*サイトの表示領域が160:89以上の横長の比率の場合*/
+/*16:9よりも横長の比率を実現するためには160:89（〜16:9）が最適*/
+@media only screen and (min-aspect-ratio: 160/89) {
+	.wrap { max-width: 80%; }
+	#pageTop { padding-top: 1.3%; padding-bottom: 1.3%; }
+	#globalnavi .nav_menu { margin-right: 20px; }
+	#introductionDB, iframe#introductionIF { max-height: 460px; }
+	.searchCategory .photo { max-height: 160px; }
+}
+/*サイトの表示領域が4:3以下の縦長の比率の場合*/
+@media only screen and (max-aspect-ratio: 4/3) {
+	#pageTop { padding-top: 2%; padding-bottom: 2%; }
+	#topSet { padding-top: 2%; padding-bottom: 2%; }
+	#introductionDB { max-height: 540px; }
+	#introductionIF { height: 540px; }
+}
+
+/*画面横幅がhoge以下の場合*/
+
+/*画面横幅が1360px（プロモ＋バナー1行の横幅）以下の場合*/
+@media only screen and (max-width: 1360px) {
+	.wrap { max-width: 100%; }
+	#globalnavi .nav_menu { margin-right: 20px; }
+}
+/*画面横幅が1200px以下の場合*/
+@media only screen and (max-width: 1200px) {
+	#globalnaviWrap { width: 100%; float: none; display: inline-block; margin-top: 0.5%; }
+	#globalnavi { float: none; display: inline-block; }
+	form#searchform { float: right; }
+	div.searchMaker,
+	div.searchDesigner,
+	/* div.searchSpec, */
+	div.searchSeries,
+	div.productsList {
+		width: 14.285%; /*未対応の場合*/
+		/* width: calc( 100% / 7 ); */
+	}
+	.relatedProducts div.productsList {
+		width: 11.11%; /*未対応の場合*/
+		/* width: calc( 100% / 9 ); */
+	}
+	ul#promo li { width: 11.11%; }
+	div.photoDlList { width: 20%; }
+}
+/*画面横幅が1080px（再びプロモ＋バナー1行の横幅）以下の場合*/
+/*iPadのlandscapeモード（横向き）は含まれる*/
+/*Nexus7のlandscapeモード（横向き）は含まれる*/
+@media only screen and (max-width: 1080px) {
+	#tformLogo a { height: 27px; }
+	#globalnavi .nav_menu { margin-right: 35px; }
+	form#searchform { position: absolute; top: 2.5%; right: 2%; margin-top: 0; }
+	/*#topSet ul#topNews { float: none; display: block; }*/
+	#introductionDB, #introductionIF { max-height: 340px; }
+	.variationGroup .oneVariation { width: 33.333%; }
+	#promo li { width: 12.5%; }
+}
+/*iPadのlandscapeモード（横向き）限定の場合*/
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:landscape) {
+	#pageTop { padding-top: 2%; }
+	#topSet,
+	#commonSet { padding-top: 2%; padding-bottom: 0.7%; }
+}
+/*画面横幅が1020px以下の場合*/
+/*iPadのlandscapeモード（横向き）は含まれない*/
+/*Nexus7のlandscapeモード（横向き）は含まれる*/
+@media only screen and (max-width: 1020px) {
+	#globalnavi .nav_menu { margin-right: 22px; }
+	div.searchMaker,
+	div.searchDesigner,
+	div.searchSpec,
+	div.searchSeries,
+	div.productsList {
+		width: 16.666%; /*未対応の場合*/
+		/* width: calc( 100% / 6 ); */
+	}
+	.relatedProducts div.productsList {
+		width: 12.5%; /*未対応の場合*/
+		/* width: calc( 100% / 8 ); */
+	}
+	div.photoDlList { width: 25%; }
+	/*../css/tform_common_2.css*/
+	.dlCatalogue .oneItem { width: 25%; }
+}
+/*画面横幅が1020px以下で、且つサイトの表示領域が4:3以下の縦長の比率の場合*/
+@media only screen and (max-aspect-ratio: 4/3) and (max-width: 1020px) {
+	#globalnaviWrap { margin: 1% 0 0 0; }
+}
+/*画面横幅が939px以下の場合*/
+/*Nexus7のlandscapeモード（横向き）は含まれない*/
+@media only screen and (max-width: 939px) {
+	#pageTop #globalnavi .nav_menu { margin-right: 11px; }
+	.sortBox { clear: both; }
+	#topNews { float: none; display: block; }
+	#promo li { width: 14.285%; }
+}
+/*画面横幅が845px（フッター1行の横幅）以下の場合*/
+@media only screen and (max-width: 845px) {
+	#globalnaviWrap { display: none; }
+	#mobile-header { display: block; float: right; margin-top: 0.5em; }
+	#searchform #keywords:focus { width: 98px; }
+	#topNews { height: auto; max-height: 60px; }
+	#promo li { width: 16.66%; }
+	#pageBottom { text-align: center; }
+	#pageBottom nav { width: 100%; margin-right: 0; }
+	#pageBottom nav ul li {
+		width: 25%; /*未対応の場合*/
+		/* width: calc( 100% / 4 ); */
+	}
+	#pageBottom #copyright { float: none; display: inline-block; margin: 1.5%; }
+	div.searchMaker,
+	div.searchDesigner,
+	div.searchSpec,
+	div.searchSeries,
+	div.productsList {
+		width: 20%; /*未対応の場合*/
+		/* width: calc( 100% / 5 ); */
+	}
+	div.searchSpec .iconCaption { font-size: 77%; }
+	div.searchCategory {
+		width: 25%; /*未対応の場合*/
+		/* width: calc( 100% / 4 ); */
+	}
+	.relatedProducts div.productsList {
+		width: 14.285%; /*未対応の場合*/
+		/* width: calc( 100% / 7 ); */
+	}
+	.photoDlList { width: 33.3%; }
+	#tabmenu ul li a, ul.subCateSet li a {
+		padding: 2% 0 !important;
+	}
+	#wrapper { background: #fff !important; }
+	/*../css/tform_common_2.css*/
+	.dlCatalogue .oneItem { width: 33.33%; }
+	.cataOnline .textBox { width: 100%; float: none; margin: 0 0 1em 0; }
+	.cataOnline .photoBox  { width: 100%; float: none; margin: 0 0 1em 0; }
+	.cataOnline .photoImage { max-width: 380px; }
+	.cataOnline .photoText { text-align: center; }
+	#photoWrapper { width: 96%; margin-right: 0; }
+	#specWrapper { width: 96%; }
+	/*
+	#introductionDB { overflow: auto; max-height: none !important; }
+	#introductionDB .textBox { width: 96%; float: none; display: inline-block; margin: 0 auto; margin-bottom: 1.2em; }
+	#introductionDB .photoBox { width: 85%; max-width: 480px; margin: 0 auto; float: none; display: block; }
+	*/
+}
+/*画面横幅が826px（ヘッダー1行の横幅）以下の場合*/
+/*iPadのPortraitモード（縦向き）は含まれる*/
+@media only screen and (max-width: 826px) {
+	body { font-size: 12.5px; }
+	ul#promo li { width: 14.285%; }
+	.area ul.sidr-class-accordion li div.sidr-class-menuForSidr { text-align: left; }
+	.area ul.sidr-class-accordion li div.sidr-class-menuForSidr span { float: none; display: inline-block; width: 100%; margin: 0.15em 0; }
+	.area ul.sidr-class-accordion li div.sidr-class-menuForSidr img { margin: 0.5em 0.5em 0.5em 0; }
+	.variationGroup .oneVariation { width: 50%; }
+	.relatedProducts div.productsList {
+		width: 20%; /*未対応の場合*/
+		/* width: calc( 100% / 5 ); */
+	}
+	#container ul.sidr-class-accordion li .sidr-class-menuForSidr  { text-align: left; }
+	#container ul.sidr-class-accordion li .sidr-class-menuForSidr span { float: none; margin: 0.5em; margin-top: 0.25em; }
+}
+/*画面横幅が826px以下で、且つサイトの表示領域が4:3以下の縦長の比率の場合*/
+@media only screen and (max-aspect-ratio: 4/3) and (max-width: 826px) {
+	form#searchform { top: 2%; }
+}
+/*画面横幅が726px以下の場合*/
+/*iPadのPortraitモード（縦向き）は含まれない*/
+/*Nexus7のPortraitモード（縦向き）は含まれる*/
+/*iPhone3,4,5のlandscapeモード（横向き）は含まれる*/
+@media only screen and (max-width: 726px)  {
+	body { font-size: 12px; }
+	#tformLogo a { height: 22px; }
+	.whatnew { line-height: 1.3em; }
+	#topNews li a { line-height: 1.3em; }
+	#promo { margin-top: 2%; margin-bottom: 2%; margin-left: 0; }
+	#promo li { width: 16.66%; }
+	#tabmenu ul li,
+	.subCateSet li {
+		line-height: 3.2em;
+		width: 50% !important; /*未対応の場合*/
+		/* width: calc( 100% / 2 ); */
+	}
+	.relatedProducts div.productsList {
+		width: 25%; /*未対応の場合*/
+		/* width: calc( 100% / 4 ); */
+	}
+	.relatedProducts div.productsList ul.caption { max-height: 16em; }
+	#concept { max-width: 510px; padding-left: 4em; }
+}
+/*画面横幅が608px以下の場合*/
+/*Nexus7のportrait（縦向き）は含まれる*/
+/*iPhone3,4,5のlandscapeモード（横向き）は含まれる*/
+@media only screen and (max-width: 608px) {
+	#pageTop div#mobile-header img { height: 15px; }
+	ul#promo li { width: 20%; }
+	div.searchMaker,
+	div.searchDesigner,
+	div.searchSpec,
+	div.searchSeries,
+	div.productsList {
+		width: 25%; /*未対応の場合*/
+		/* width: calc( 100% / 4 ); */
+	}
+	div.searchDesigner { } /*height: 11.7em;*/
+	a#responsive-menu-button img { margin-bottom: 0.125em; }
+	#concept { max-width: 410px; padding: 0 1em; }
+	#concept p br { display: none; }
+}
+/*画面横幅が515px以下の場合*/
+/*ページャーの数が最大の時に1行収まらない幅*/
+@media only screen and (max-width: 515px) {
+	/* .recordChange ol.pageNumber { float: none; } */
+}
+/*画面横幅が479px以下の場合*/
+/*Nexus7のportrait（縦向き）は含まれない*/
+/*iPhone3,4,5のlandscapeモード（横向き）は含まれない*/
+/*iPhoneのPortraitモード（縦向き）は含まれる*/
+@media only screen and (max-width: 479px) {
+	.wrap { padding: 3% 4%; }
+	#tabmenu ul li, ul.subCateSet li { width: 100% !important; }
+	#tabmenu ul li a, ul.subCateSet li a { border-top-color: #fff !important; border-bottom-color: #fff !important; }
+	ul#topNews li a { line-height: 1.2em; }
+	ul#promo li { width: 33.33%; }
+	ul#promo li a { margin: 5%; }
+	#pageBottom nav ul li {
+		width: 50%; /*未対応の場合*/
+		/* width: calc( 100% / 2 ); */
+	}
+	div.area ul.sidr-class-accordion li ul li div.searchSpec { padding: 2%; }
+	div.searchMaker,
+	div.searchDesigner,
+	div.searchSpec,
+	div.searchSeries,
+	div.productsList {
+		width: 33.333%; /*未対応の場合*/
+		/* width: calc( 100% / 3 ); */
+	}
+	div.searchCategory {
+		width: 50%; /*未対応の場合*/
+		/* width: calc( 100% / 2 ); */
+	}
+	div.searchCategory a {
+		/* height: 17em; */
+	}
+	.relatedProducts div.productsList {
+		width: 33.333%; /*未対応の場合*/
+		/* width: calc( 100% / 3 ); */
+	}
+	.relatedProducts div.productsList ul.caption { max-height: 20em; }
+	.variationGroup .oneVariation { width: 100%; }
+
+	div#specPrimary,
+	div#specSecondary { float: none; width: 100%; margin-right: 0; margin: 1.5em 0; }
+	/*../css/tform_common_2.css*/
+	.dlCatalogue .oneItem { width: 50%; }
+}
+/*画面横幅が314px以下の場合*/
+/*iPhoneのPortraitモード（縦向き）は含まれない*/
+@media only screen and (max-width: 314px) {
+	ul#topNews { max-height: none; }
+	ul#promo li a { margin: 2%; }
+	div.searchMaker,
+	div.searchDesigner,
+	div.searchSpec,
+	div.searchSeries,
+	div.productsList {
+		width: 50%; /*未対応の場合*/
+		/* width: calc( 100% / 2 ); */
+	}
+	div.searchCategory {
+		width: 50%; /*未対応の場合*/
+		/* width: calc( 100% / 2 ); */
+	}
+	.relatedProducts div.productsList {
+		width: 25%; /*未対応の場合*/
+		/* width: calc( 100% / 4 ); */
+	}
+	.relatedProducts div.productsList ul.caption { max-height: 14em; }
+}
+/*画面横幅が266px（コピーライト1行の横幅）以下の場合*/
+@media only screen and (max-width: 266px) {
+	#pageTop { min-width: 220px; }
+	#tformLogo { display: inline-block; }
+	.cycle-slideshow { width: 100%; float: none; display: inline-block; }
+	#mainContents { min-width: 220px; }
+	#topSet,
+	#commonSet { min-width: 220px; }
+	#pageBottom { min-width: 220px; }
+	#pageBottom nav ul li { width: 100%; }
+}
+
+/*画面横幅がhoge以上の場合*/
+
+/*画面横幅が1600px（プロモ＋バナー1行の横幅）以上の場合*/
+@media only screen and (min-width: 1600px) {
+	div.searchMaker,
+	div.productsList {
+		width: 11.111%; /*未対応の場合*/
+		/* width: calc( 100% / 9 ); */
+	}
+	div.searchSeries,
+	div.searchDesigner {
+		width: 12.5%; /*未対応の場合*/
+		/* width: calc( 100% / 8 ); */
+	}
+	div.searchSpec {
+		width: 14.285%; /*未対応の場合*/
+		/* width: calc( 100% / 7 ); */
+	}
+	div.searchCategory {
+		width: 16.666%; /*未対応の場合*/
+		/* width: calc( 100% / 6 ); */
+	}
+	div.photoDlList { width: 16.666%; }
+}
+/*画面横幅が1800px（プロモ＋バナー1行の横幅）以上の場合*/
+@media only screen and (min-width: 1800px) {
+	.wrap { max-width: 1605px; }
+	ul#promo li { width: 9.09%; }
+	div.searchCategory {
+		width: 14.285%; /*未対応の場合*/
+		/* width: calc( 100% / 7 ); */
+	}
+	div.searchSeries,
+	div.searchDesigner {
+		width: 11.11%;
+		/* width: calc( 100% / 9 ); */
+	}
+	div.searchMaker,
+	div.productsList {
+		width: 10%; /*未対応の場合*/
+		/* width: calc( 100% / 10 ); */
+	}
+	div.photoDlList { width: 16.666%; }
+}

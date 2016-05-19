@@ -1,0 +1,307 @@
+@charset "UTF-8";
+
+/*リセット*/
+* { margin: 0; padding: 0; }
+section, article, header, nav, aside, footer, canvas, details, figure, figcaption, hgroup, menu, summary { display: block; }
+ul, ol { list-style-type: none; }
+figure { line-height: 0; }
+img { border: none; }
+table { border-collapse:collapse; border:none; border-spacing:0; }
+
+/*汎用*/
+body {
+	font-family: "Open Sans", /* "Noto Sans JP", "游ゴシック", "Yu Gothic", "YuGothic", */ "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; 
+	font-size: 13px;
+	font-weight: 400; /* 200 */
+	line-height: 1.5em;
+	color: #555;
+	background: #fff; /* #ddd */
+	-webkit-text-size-adjust: 100%;
+}
+
+a { color: #299dbc; text-decoration: none; }
+a:hover { color: #30A8C3; font-weight: 600; } /* font-weight: 500; */
+
+#pageTop, #wrapper, #categoryVisual, #topSet, #commonSet, #pageBottom {
+	display: inline-block; width: 100%; padding: 0; clear: both; background: #fff;
+	/width: auto; /*IE7以下ハック（IE7以下のみdisplay:inline-blockがdisplay:blockとして解釈されるため）*/
+	/margin: 0 auto; /*IE7以下ハック*/
+}
+
+/*ヘッダー*/
+#pageTop { padding-top: 1.7%; padding-bottom: 1.7%; }
+#tformLogo { display: inline-block; margin-right: 20px; vertical-align: top;
+	/float: left; /*IE7以下のハック（IE7以下はdisplay:inline-blockがdisplay:blockとして解釈されるため）*/
+}
+#tformLogo a { height: 30px; display: block; }
+#tformLogo a img { height: 100%; }
+#tformLogo a:hover img { filter: alpha(opacity=60); -moz-opacity: 0.6; -webkit-opacity: 0.6; opacity: 0.6; }
+
+/*グローバルメニュースマホ用*/
+#mobile-header { display: none; }
+#menuClose { display: none; }
+a#responsive-menu-button { width: 70px; display: block }
+a#responsive-menu-button img { height: 15px; vertical-align: bottom; margin-bottom: 0.2em; }
+a#responsive-menu-button .menuOn { display: none; }
+a:hover#responsive-menu-button .menuOn { display: inline; }
+a:hover#responsive-menu-button .menuOff { display: none; }
+a#responsive-menu-button span {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 600;
+	font-size: 125%;
+	color: #575757;
+}
+a:hover#responsive-menu-button span { color: #000; }
+
+
+/*グローバルメニューセット*/
+#globalnaviWrap { float: right; }
+
+/*グローバルメニュー*/
+#globalnavi { float: left; margin: 0.75em 0 0.1em 0; position: relative; z-index: 888888; }
+#globalnavi .nav_menu { margin-right: 30px; float: left/*JSが無効になった場合のために*/; }
+#globalnavi .nav_menu img { height: 15px; }
+#globalnavi .nav_menu .menuForSidr { display: none !important; }
+#globalnavi .nav_menu ul { display: none; } /*JSが無効になった場合のために*/
+
+/*グローバルメニュー内のテキスト*/
+a.menuForDroppy img { vertical-align: bottom; margin-bottom: 0.2em; }
+a.menuForDroppy span { font-family: "Open Sans", sans-serif; font-weight: 600; font-size: 110%; color: #575757; }
+a.menuForDroppy span.menuActive,
+a:hover.menuForDroppy span { color: #000; }
+a.menuForDroppy img.menuOn { display: none; }
+a:hover.menuForDroppy img.menuOn { display: inline; }
+a:hover.menuForDroppy img.menuOff { display: none; }
+
+
+
+/*ラッパー*/
+#wrapper { border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; background: #f8f8f8; }
+
+/*ラップ*/
+.wrap { padding: 0 2%; max-width: 90%; margin: 0 auto; clear: both; }
+
+/*トピックパス*/
+#topicPath { display: inline-block; width: 100%; margin-top: 0.2em; }
+#topicPath li { float: left; font-size: 77%; line-height: 2em; padding-left: 1.4em; margin-right: 0.4em; 
+	background-image: url("../images/common_theme/topicPath-trans.png");
+	background-image: url("../images/common_theme/topicPath_ie8-trans.png")\9; /*IE8以下のハック（このプロパティのみ何故かIE9以上には効かないので好都合）*/
+	background-repeat: no-repeat;
+	background-size: 1em auto;
+	-moz-background-size: 1em auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+	background-position: 0 0.5em;
+}
+
+/*トピックパスホーバー文字*/
+#topicPath li a { color: #666666; }
+#topicPath li a:hover { color: #299dbc; }
+/*トピックパスホーム*/
+#topicPath li.home { width: 1em; padding: 0.4em 0.2em 0 0.2em; line-height: 1.6em; background: none; }
+#topicPath li.home a img { width: 100%; vertical-align: top; filter: alpha(opacity=50); -moz-opacity: 0.5; -webkit-opacity: 0.5; opacity: 0.5; }
+#topicPath li.home a:hover img { filter: alpha(opacity=100); -moz-opacity: 1; -webkit-opacity: 1; opacity: 1; }
+/*トピックパスカテゴリー*/
+#topicPath li.categoryPath { font-family: 'Open Sans', sans-serif; font-weight: 600; font-style: italic; font-size: 82%; line-height: 1.8em; }
+#topicPath li.categoryPath a { color: #299dbc; }
+#topicPath li.categoryPath a:hover { color: #30A8C3; }
+/*トピックパス現在位置*/
+#topicPath li span.presentPosition { color: #000; font-weight: 400; line-height: 1; font-size: 1.2em; }
+
+/*メインコンテンツ（アーティクル）*/
+#mainContents {
+	display: inline-block;
+	width: 98%; /* 96%から変更（2015.1.13）*/
+	padding: 1%; /* 2%から変更（2015.1.13）*/
+	min-height: 420px;
+	background: #fff;
+	margin: 1% 0 4% 0; /*  1em 0 3em 0から変更（2015.1.18）*/
+	font-size: 110%;
+	line-height: 2em;
+	clear: both; 
+}
+
+/*メインコンテンツ（アーティクル） ヘッダー*/
+#mainContents header { display: inline-block; width: 100%; padding: 0; }
+#mainContents header h1 { float: left; max-width: 60%; font-size: 138.5%; font-weight: normal; color: #3F3F3F; margin-top: 0.3em; }
+#mainContents header p { font-size: 93%; margin-top: 0.7em; }
+
+/*コンテナー*/
+#container { display: inline-block; width: 100%; padding-bottom: 1px; clear: both; }
+
+/*広告セット（アサイド）*/
+#commonSet { padding-top: 1.5%; padding-bottom: 1.5%; line-height: 0; background: #f1f1f1; border-bottom: 1px solid #d1d1d1; }
+
+/*広告プロモ（アサイド）*/
+ul#promo { display: inline-block; width: 100%; }
+	ul#promo { /float: left; } /*IE7ハック（IE7のみdisplay:inline-blockがdisplay:blockとして解釈されるため）*/
+ul#promo li { float: left; line-height:0; width: 10%; }
+ul#promo li a { display: block; margin: 3%; }
+ul#promo li a img { width: 100%; }
+ul#promo li a:hover img { filter: alpha(opacity=60); -moz-opacity: 0.6; -webkit-opacity: 0.6; opacity: 0.6; }
+
+/*フッター*/
+#pageBottom { padding-top: 1%; padding-bottom: 1%; }
+#pageBottom nav { display: inline-block !important; margin-bottom: 0.3%; margin-right: 0.3%;
+	/float: left; /*IE7以下のハック（IE7以下はdisplay:inline-blockがdisplay:blockとして解釈されるため）*/
+}
+#pageBottom ul li { width: 133px; float: left; font-size: 93%; text-align: center; margin: 0.6% 0; }
+#pageBottom ul li a { display: block; color: #353535; border-right: 1px solid #999; border-left: 1px solid #999; margin-right: -1px; padding: 1.25px 0; }
+#pageBottom ul li a:hover { color: #000; background: #efefef; }
+#pageBottom ul li a span { line-height: 1em; }
+#pageBottom ul li a span.companyName { font-style: italic; font-family: "Verdana", sans-serif; }
+
+#copyright { font-family: 'Open Sans', sans-serif; font-weight: 200; font-size: 85%; float: right; margin: 4px 0 0 8px; color: #000; }
+.footerActive { color: #000; font-weight: 500; }
+
+/*PDFダウンロードアイコン*/
+a.iconPDF { font-size: 85%; }
+a.iconPDF img { height: 3.3em; vertical-align: middle; }
+a:hover.iconPDF img { filter: alpha(opacity=60); -moz-opacity: 0.6; -webkit-opacity: 0.6; opacity: 0.6; }
+
+.pdfIcon { vertical-align: middle; margin-right: 0.25em; }
+
+/*レコードとソートのスタイル*/
+.recordWrapTop { display: inline-block; width: 100%; }
+.recordWrapBottom { display: inline-block; width: 100%; margin-top: 1em; }
+
+/*レコードカウントのスタイル*/
+.recordChange { float: left; clear: left; margin: 0 0 0.5em 0; }
+.recordChange .countBox { float: left; margin-right: 1em; }
+.recordChange ol.pageNumber { float: left; margin-top: 0.4em; }
+.recordChange ol.pageNumber li { float: left; line-height: 1; margin-right: 0.4em; margin-bottom: 0.4em; text-align: center; background: #fafafa; }
+.recordChange ol.pageNumber li a { display: block; color: #666666; background: #fcfcfc; font-size: 77%; padding: 0.25em 0.5em; border: 1px solid #ccc; }
+.recordChange ol.pageNumber li a:hover,
+.recordChange ol.pageNumber li.thisPage a { color: #fff; background: #299dbc; padding: 0.25em 0.5em; border-color: #299dbc; font-weight: bold; }
+.recordChange ol.pageNumber li.thisPage a { cursor: default; }
+.recordChange span { float: left; font-size: 82%; margin: 0 1em 0 0.2em; }
+.hitCount,
+.firstPage a,
+.prevPage a { color: #666; }
+
+.firstPage a:hover,
+.prevPage a:hover { color: #299dbc; font-weight: bold; }
+
+.prevPage img,
+.nextPage img,
+.prevPage a img,
+.nextPage a img {
+	height: 1.3em; margin-top: 0.15em; vertical-align: text-bottom;
+	filter: alpha(opacity=50); -moz-opacity: 0.5; -webkit-opacity: 0.5; opacity: 0.5;
+}
+.prevPage a:hover img,
+.nextPage a:hover img {
+	filter: alpha(opacity=80); -moz-opacity: 0.8; -webkit-opacity: 0.8; opacity: 0.8;
+}
+
+/*表示順のスタイル*/
+.sortBox { float: right; margin: 0 0 0.5em 0; }
+.sortBox span { font-size: 77%; line-height: 2.2em; margin-right: 1em; }
+.sortBox form { display: inline; }
+.sortBox select {
+	min-width: 249px;
+	padding: 3px 4px 3px 3px; /*IEとFirefoxのための微調整*/
+	color: #666666;
+	font-size: 77%;
+	background-color: #fafafa;
+	background-image: url("../images/common_theme/selectBtn_on.png");
+	background-image: url("../images/common_theme/selectBtn_ie8.png")\9; /*IE8以下のハック（このプロパティのみ何故かIE9以上には効かないので好都合）*/
+	background-repeat: no-repeat;
+	background-size: 12px auto;
+	-moz-background-size: 12px auto; /*Firefox 3以下（Lunascape+Gecko）のハック*/
+	background-position: 98% 3px;
+}
+
+/*セレクト初期設定リセット*/
+.sortBox select {
+	border: 1px solid #dfdfdf !important;
+	-webkit-border-radius: 0;
+	border-radius: 0 !important;
+	-webkit-appearance: none;
+	appearance: none !important;
+}
+
+#tabmenu { line-height: 0; }
+/*タブメニュー切換え*/
+#tabmenu ul { display: inline-block; width: 100%; margin-bottom: 2%; }
+/*サブカテゴリーでフィルタ*/
+ul.subCateSet { display: inline-block; width: 100%; margin: 0.5em 0; }
+
+#tabmenu ul li,
+ul.subCateSet li {
+	float: left;
+	position: relative;
+	z-index: 10;
+	width: 33.3%; /*未対応の場合*/
+	/* width: calc(100% / 3); */
+}
+
+/*タブメニュー*/
+/*サブカテゴリーでフィルタ*/
+#tabmenu ul li a,
+ul.subCateSet li a {
+	display: block;
+	font-size: 85%;
+	text-align: center; color: #666666;
+	padding: 1% 0;
+	background: #f3f3f3;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+	margin-right: -1px;
+	margin-bottom: -1px;
+	overflow: hidden;
+	color: #299dbc;
+	font-weight: 500;
+	line-height: 2em; /* 1.7em */
+	height: 1.7em;
+	/*height: 24px; line-height: 24px;*/
+}
+/* IE9ハック*/
+#tabmenu ul li a, ul.subCateSet li a { padding: 1.25% 1% 0.75% 1% \9; }
+/*IE10,11ハック*/
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	#tabmenu ul li a:not(:target), ul.subCateSet li a:not(:target) {
+		padding: 1.25% 1% 0.75% 1% \9; /* IE10に対応 */
+		padding: 1.25% 1% 0.75% 1%; /* IE11に対応 */
+	}
+}
+
+.lightSpace { background: #fff; }
+.lightSpace #tabmenu ul li a { background: #eaeaea; }
+
+#tabmenu ul li a:hover,
+ul.subCateSet li a:hover {
+	color: #fff; font-weight: bold; background: #299dbc; border-top-color: #299dbc; border-bottom-color: #299dbc; font-weight: 500;
+}
+
+/*タブメニューのアイコン*/
+/*サブカテゴリーでフィルタのアイコン*/
+/* #tabmenu ul li img,
+ul.subCateSet li img */
+a img.mouseOn,
+a img.mouseOut {
+	width: 6px;
+	vertical-align: middle;
+	margin: 0 0.6em 0 0;
+	margin-top: 0px\9; /*IE10以下のハック*/
+	/margin-top: 0; /*IE7以下ハック*/
+	/vertical-align: middle; /*IE7以下ハック*/
+}
+/* #tabmenu ul li a img.mouseOn, #tabmenu ul li a:hover img.mouseOut,
+ul.subCateSet li a img.mouseOn, ul.subCateSet li a:hover img.mouseOut */
+a img.mouseOn,
+a:hover img.mouseOut {
+	display: none;
+}
+
+/* #tabmenu ul li a:hover img.mouseOn,
+ul.subCateSet li a:hover img.mouseOn */
+a:hover img.mouseOn {
+	display: inline;
+}
+
+.cautionRed { color: red; }
+.sizeMini { font-size: 88% !important; }
+.sizeBig { font-size: 108% !important; }
+
+.font_bold { font-weight: 600; }
