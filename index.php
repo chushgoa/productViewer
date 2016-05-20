@@ -30,11 +30,11 @@
   }
 
   #guiBar {
-  	width: 50%;
+  	width: 100%;
   	height: 50px;
   	position: absolute;
   	bottom: 55px;
-  	left: 25%;
+  	left: 0;
   	outline: 0px solid;
       background-color: #FFFFFF;
   	display: none;
@@ -128,11 +128,11 @@
   /* GUIBAR BASE SECTION */
 
   #guiBarBase {
-  	width: 50%;
+  	width: 100%;
   	height: 35px;
   	position: absolute;
   	bottom: 15px;
-  	left: 25%;
+  	left: 0;
   	text-align: center;
   	letter-spacing: 10px;
   	-webkit-touch-callout: none;
@@ -297,17 +297,24 @@
 			alert("COUNTER CLOCKWISE");
 		});
         */
-
+/*
+// ----------------------------------------------
+// SCREENSHOT ----------------------------------
+// ----------------------------------------------
+// THIS IS SET IN THE THREEx.screenshot.js file.
+// KEEP THIS BIT OF CODE FOR REFERENCE.
 		$("#screenshotBtn").click(function () {
 			//alert("SCREENSHOT");
 		});
+// ----------------------------------------------
+*/
+
 		$("#settingsBtn").click(function () {
 			alert("SETTINGS");
 		});
 
-
 		/* toggle button icon changes */
-		$('#dayNightBtn span').click(function(){
+		$('#playPauseBtn span').click(function(){
 			$(this).find('i').toggleClass('fa-pause fa-play')
 		});
 	});
@@ -342,45 +349,57 @@ $imgs = '';
 foreach($images as $image){ $imgs[] = "$image"; }
 // ---------------------------------------------------------------------------
 ?>
-	<!-- top view of gui bar -->
-	<div id='guiBar'>
-		<div id='guiPrev' class='guiControlButton '>
-      <i class="fa fa-chevron-left"></i>
-    </div>
-    <div id='guiBarContentWrapper'>
-    	<div id='guiBarItemWrapper'>
-    	<?php
-    		//display images
-// FIX TO READ ONLY FROM THIS ITEMS DIRECTORY OF APPROVED TEXTURES, For now its hardcoded to show all textures.
-    		foreach ($imgs as $img) {
-    		echo "<a href='#'>";
-    			echo "<div class='guiItem' name='$img'><img src='$img' style='width: 100%;' /><span></span></div>";
-    			echo "</a>";
-    		}
-    	?>
-    	</div>
-    </div>
-			<div id='guiNext' class='guiControlButton'>
-        <i class="fa fa-chevron-right"></i>
-      </div>
-	</div>
-	<!-- bottom controls of gui bar -->
-	<div id='guiBarBase' class='fade'>
-		<div id='materialBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
-		<div id='rotateClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
-		<div id='rotateCounterClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
-		<div id='dayNightBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-pause"></i></span></div>
-		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera-retro"></i></span></div>
-		<div id='settingsBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
-	</div>
-	<!-- top controls of gui bar -->
 	</body>
 
 	<!-- main page start here -->
 <!--<script src='js/scene.js'></script>-->
 <div id="canvasWrapper">
-  <div id="canvasBlock" style="width: 300px; height: 450px; margin: auto; background-color: #CCC;">
-    <img src="textures/logo/logoHussl.png" style='width: 20%; height; 20%; margin-top: 10px; margin-left: 10px;'>
+  <div id="canvasBlock" style="width: 400px; height: 550px; margin: auto; background-color: red; position: relative;">
+    <!-- top view of gui bar -->
+  	<div id='guiBar'>
+  		<div id='guiPrev' class='guiControlButton '>
+        <i class="fa fa-chevron-left"></i>
+      </div>
+      <div id='guiBarContentWrapper'>
+      	<div id='guiBarItemWrapper'>
+      	<?php
+      		//display images
+  // FIX TO READ ONLY FROM THIS ITEMS DIRECTORY OF APPROVED TEXTURES, For now its hardcoded to show all textures.
+      		foreach ($imgs as $img) {
+      		echo "<a href='#'>";
+      			echo "<div class='guiItem' name='$img'><img src='$img' style='width: 100%;' /><span></span></div>";
+      			echo "</a>";
+      		}
+      	?>
+      	</div>
+      </div>
+  			<div id='guiNext' class='guiControlButton'>
+          <i class="fa fa-chevron-right"></i>
+        </div>
+  	</div>
+  	<!-- bottom controls of gui bar -->
+  	<div id='guiBarBase' class='fade'>
+  		<div id='materialBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cube"></i></span></div>
+  		<div id='rotateClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-repeat"></i></span></div>
+  		<div id='rotateCounterClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
+  		<div id='playPauseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-pause"></i></span></div>
+  		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera-retro"></i></span></div>
+  		<div id='settingsBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
+  	</div>
+  	<!-- top controls of gui bar -->
+
+    <img src="textures/logo/logoHussl.png" style='width: 20%; height; 20%; top: 10px; left: 10px; position: absolute;'>
+    <div style='position: absolute; top: 60px; left: 10px; color: #828282;'>
+      <span style="font-weight: 700;">スタンダードチェア</span>スタッキング不可能<br>
+      w43xd46xh78.5 sh45cm<br>
+        <span style="color: #000;">
+          ST6N-2<br>
+          座：木製<br>
+          ￥46,400(税別)<br>
+
+        </span>
+
+    </div>
     <script src='js/scene.js'></script>
   </div>
 </div>

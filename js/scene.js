@@ -48,15 +48,16 @@ var hemiLuminousIrradiances = {
 
 var params = {
 	shadows: false,
-	exposure: 0.5,
+	exposure: 0.63,
 	bulbPower: Object.keys( bulbLuminousPowers )[2],
-	hemiIrradiance: Object.keys( hemiLuminousIrradiances )[6]
+	hemiIrradiance: Object.keys( hemiLuminousIrradiances )[4]
 };
 
 var clock = new THREE.Clock(); // for the lights
 var previousShadowMap = false; // set shadows
 
 /* TRANSLATE */
+var startAnimationIsPlaying = true; // controling playing the default rotation animation
 var rotationSpeed = 0.05; // test rotation speed for THREEgui
 var moveSpeed = 0.01; // test moveSpeed for TRHEEgui
 var rotationC = false; // set boolean for rotation for gui button
@@ -316,6 +317,12 @@ function init() {
         var el_rotateCounterClockwise = document.getElementById("rotateCounterClockwiseBtn");
         el_rotateCounterClockwise.addEventListener('mousedown', function(){guiRotateCounterClockwise(true);}, false);
         el_rotateCounterClockwise.addEventListener('mouseup', function(){guiRotateCounterClockwise(false);}, false);
+
+				var el_playPause = document.getElementById("playPauseBtn");
+				el_playPause.addEventListener('mousedown', function(){
+					startAnimationIsPlaying = !startAnimationIsPlaying; // toggle boolean to check if startAnimation is playing.
+					//alert(startAnimationIsPlaying);
+				}, false);
     }
 
 /* ADD THE FUCNTIONS HERE IN ORDER*/
@@ -370,7 +377,7 @@ function addPhysicalLighting(){
 	var time = Date.now() * 0.0005;
 	var delta = clock.getDelta();
 
-	bulbLight.position.y = Math.cos( time ) * 0.75 + 1.25;
+	//bulbLight.position.y = Math.cos( time ) * 0.75 + 1.25;
 	//testObject01.position.x = Math.cos ( time ) * 0.25 + 0.5;
 }
 
@@ -645,7 +652,7 @@ function onDocumentMouseMove( event ) {
 function addLoaders(){
 
 	var material;
-  var modelPath = "models/st61.obj";
+  var modelPath = "models/tc4.obj";
   var loader = new THREE.OBJLoader(manager);
   loader.load(modelPath, function (object) {
 
@@ -669,6 +676,18 @@ function addLoaders(){
         child.material = materialObj;
         child.castShadow = true;
         child.receiveShadow = true;
+				console.log(child.name);
+
+				switch(child.name){
+					case "seat":
+						console.log("seat = " + child.name);
+						child.material = material01;
+					break;
+					case "frame":
+						console.log("frame = " + child.name);
+						child.material = material02;
+					break;
+				}
       }
     });
 
@@ -677,22 +696,22 @@ function addLoaders(){
   	object.name="myGroup";
 
   	// seat
-  	object.children[0].material = material01
+  	//object.children[0].material = material01;
 
   	// bolts
-  	object.children[1].material = new THREE.MeshPhongMaterial({color: 0xffffff, reflectivity: 1, side: THREE.DoubleSide});
+  //	object.children[1].material = material02;
 
   	// backrest
-  	object.children[2].material = material01;
+  	//	object.children[2].material = material01;
 
   	// frameRim
-  	object.children[3].material = material02;
+  	//	object.children[3].material = material02;
 
   	// frameLegs
-  	object.children[4].material = material02;
+  	//object.children[4].material = material02;
 
   	// footPads
-  	object.children[5].material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xcccccc, shininess: 0.1, reflectivity: 0.1, side: THREE.DoubleSide});
+  	//object.children[5].material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xcccccc, shininess: 0.1, reflectivity: 0.1, side: THREE.DoubleSide});
 
 		//then directly add the object
 
@@ -847,7 +866,9 @@ function animate() {
     // test animation
     // sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
     // --------------------------------------------------------------
-testObj.rotation.y += 0.005;
+if(startAnimationIsPlaying == true){
+	testObj.rotation.y += 0.005;
+}
     render();
     update();
 
@@ -876,7 +897,7 @@ function render() {
 	stand.visible = true;
 	/* mirror camera */
 
-    renderer.render(scene, camera);
+  renderer.render(scene, camera);
 
 }
 

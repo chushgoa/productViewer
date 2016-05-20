@@ -116,7 +116,7 @@ var THREEx	= THREEx 		|| {};
 		// callback to handle keypress
 		var onClickPress	= function(){
 			// return now if the KeyPress isnt for the proper charCode
-			//if(event.which !== charCode)	return;
+			//if(event.which !== charCode)	return; // this is from the onKeyPress function. Instead use the ifIsPressed
 			if(isPressed == false){
 				return;
 			}
@@ -133,11 +133,12 @@ var THREEx	= THREEx 		|| {};
 			}
 		}.bind(this);
 
+		// THIS CODE I ADDED TO READ A BUTTON CLICK FROM THE ID OF #screenshotBtn
 		$("#screenshotBtn").click(function () {
 			//alert("SCREENSHOT");
 
-			isPressed = true;
-			onClickPress();
+			isPressed = true; // this variable is also added by me to the top
+			onClickPress(); // just a copy of the onKeyPress function without the key check in it
 
 		});
 
