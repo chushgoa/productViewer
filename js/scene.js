@@ -57,7 +57,7 @@ var clock = new THREE.Clock(); // for the lights
 var previousShadowMap = false; // set shadows
 
 /* TRANSLATE */
-var startAnimationIsPlaying = true; // controling playing the default rotation animation
+var startAnimationIsPlaying = false; // controling playing the default rotation animation
 var rotationSpeed = 0.05; // test rotation speed for THREEgui
 var moveSpeed = 0.01; // test moveSpeed for TRHEEgui
 var rotationC = false; // set boolean for rotation for gui button
@@ -100,7 +100,34 @@ manager.onLoad = function(){
 	box = new THREE.Box3(); // create a box to find center of object
 	box.setFromObject(testObj);
 	box.center(controls.target);
-	//console.log( box.min, box.max, box.size());
+	console.log( box.min, box.max, box.size());
+
+/*
+	// create own dimention helper!! |<---- DIM ---->|
+	// @ params vector3: origin // where arrow starts
+	// @ params int: arrowSize // arrow head size
+	// @ params string: hex // arrow color
+	// @ params string: axisDir // give it x, y or z
+	/*
+	// width
+	var dir = new THREE.Vector3( box.min );
+	var origin = new THREE.Vector3( box.max );
+	var length = 1;
+	var hex = 0x000000;
+
+	*/
+	var dir = new THREE.Vector3(0,0,1);
+	var origin = new THREE.Vector3(box.max.x,box.max.y,-box.max.z);
+	var length = 1.7;
+	var hex = 0xFF0000;
+	var arrowSize = 0.025; // arrow head size
+
+	var arrowHelper = new THREE.ArrowHelper( dir, origin, length, hex, 0.025,0.025);
+	var arrowHelper2 = new THREE.ArrowHelper( new THREE.Vector3(0,0,-1), origin, arrowSize+0.001, 0xFF0000, arrowSize, arrowSize);
+	scene.add( arrowHelper );
+	scene.add( arrowHelper2 );
+
+
 	//console.log(box.center(controls.target));
 
 	camera.lookAt(box.center(controls.target));

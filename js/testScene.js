@@ -69,6 +69,14 @@ function init(){
   sphere.position.set(0,0,0);
   //scene.add(sphere);
 
+  var dir = new THREE.Vector3( 1, 0, 0 );
+  var origin = new THREE.Vector3( 0, 0, 0 );
+  var length = 1;
+  var hex = 0x000000;
+
+  var arrowHelper = new THREE.ArrowHelper( dir, origin, length, hex, 0.05,0.05 );
+  scene.add( arrowHelper );
+
   addLoaders();
 }
 
