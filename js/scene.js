@@ -48,7 +48,7 @@ var hemiLuminousIrradiances = {
 
 var params = {
 	shadows: false,
-	exposure: 0.63,
+	exposure: 0.7,
 	bulbPower: Object.keys( bulbLuminousPowers )[2],
 	hemiIrradiance: Object.keys( hemiLuminousIrradiances )[4]
 };
@@ -108,7 +108,8 @@ manager.onLoad = function(){
 	// @ params int: arrowSize // arrow head size
 	// @ params string: hex // arrow color
 	// @ params string: axisDir // give it x, y or z
-	/*
+	// @ params float: distFrom // distance from the model
+/*
 	// width
 	var dir = new THREE.Vector3( box.min );
 	var origin = new THREE.Vector3( box.max );
@@ -116,27 +117,52 @@ manager.onLoad = function(){
 	var hex = 0x000000;
 
 	*/
+// CHECK THE AXIS FOR THE DIM with a case statement
+
+
+	var distFrom = 0.08; // distance from the geometry
 	var dir = new THREE.Vector3(0,0,1);
-	var origin = new THREE.Vector3(box.max.x,box.max.y,-box.max.z);
+	var origin = new THREE.Vector3(box.max.x+distFrom,box.max.y,-box.max.z);
 	var length = 1.7;
 	var hex = 0xFF0000;
-	var arrowSize = 0.025; // arrow head size
+	var arrowSize = 0.015; // arrow head size
 
-	var arrowHelper = new THREE.ArrowHelper( dir, origin, length, hex, 0.025,0.025);
+	var arrowHelper = new THREE.ArrowHelper( dir, origin, length, hex, arrowSize, arrowSize);
 	var arrowHelper2 = new THREE.ArrowHelper( new THREE.Vector3(0,0,-1), origin, arrowSize+0.001, 0xFF0000, arrowSize, arrowSize);
+	arrowHelper.name = "dimHelper";
+	arrowHelper2.name = "dimHelper";
+	//arrowHelper.cone.material = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide}); // test to check if i could change line to a different material: RESULT: it works!
 	scene.add( arrowHelper );
 	scene.add( arrowHelper2 );
 
+	/* sprite */
+	spriteObj = new THREE.Sprite(spriteMaterial);
+	spriteObj.name = "sprite";
+	spriteObj.position.set(box.max.x+distFrom,box.max.y, 0);
+	spriteObj.scale.set(0.15,0.15,0.15)
+	//scene.add(spriteObj);
+
+	var Hello_Label = textSprite("180", {padding: 40});
+	Hello_Label.scale.normalize().multiplyScalar(0.001);
+	Hello_Label.position.set(box.max.x+distFrom,box.max.y, 0);
+	//Hello_Label.position.setZ(90);
+	//Hello_Label.position.setX(-95);
+	Hello_Label.rotation.set(11,-11,-11);
+	Hello_Label.name = "Hello Label";
+	// Hello_Label.id = "HL";
+	scene.add(Hello_Label);
 
 	//console.log(box.center(controls.target));
 
 	camera.lookAt(box.center(controls.target));
-THREEx.Screenshot.bindKey(renderer);
+	THREEx.Screenshot.bindKey(renderer);
 	animate();
 
 	$("#loadingScreen").fadeOut(500, function(){});
 
 };
+
+// ON ERROR OF LOADING SOMETHING THE MANAGER ERROR WILL PRINT TO CONSOLE ***** FIX TO NOT SHOW CONSOLE BUT INSTEAD CALL THE ERROR FUNCTION WE WILL WRITE
 manager.onError = function(){
 	console.log("error loading something");
 }
@@ -376,6 +402,43 @@ function init() {
 // ******************************************************************
 // FUNCTIONS START --------------------------------------------------
 // ******************************************************************
+function textSprite(text, params) {
+    var font = "Arial",
+        size = 130,
+        color = "#000000";
+    		padding = 10;
+
+    font = "bold " + size + "px " + font;
+
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    context.font = font;
+
+    // get size data (height depends only on font size)
+    var metrics = context.measureText(text),
+        textWidth = metrics.width;
+
+    canvas.width = textWidth + 3;
+    canvas.height = size + 3;
+
+    context.font = font;
+    context.fillStyle = color;
+    context.fillText(text, 0, size + 3);
+    //context.style.border="3px solid blue";
+
+    // canvas contents will be used for a texture
+    var texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true;
+
+    var mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(canvas.width, canvas.height),
+    new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.DoubleSide,
+				transparent: true
+    }));
+    return mesh;
+}
 
 /* ADD CAMERA REFLECTION CAMERA */
 function addReflectionCam(){
@@ -557,7 +620,7 @@ function addMaterials() {
 	var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xFFFFFF,side: THREE.DoubleSide});
 
 	/* sprite */
-	var spriteMap = new THREE.TextureLoader("images/plus.png");
+	var spriteMap = textureLoader.load("images/L.png");
 	spriteMaterial = new THREE.SpriteMaterial({map: spriteMap, color: 0xffffff, fog: true});
 
 		//materialMatCap.uniforms.tMatCap.value.wrapS =
@@ -599,12 +662,13 @@ function addObjects(){
 	spherePos = new THREE.Vector3();
 
 	/* sprite */
+	/*
 	spriteObj = new THREE.Sprite(spriteMaterial);
 	spriteObj.name = "sprite";
-	spriteObj.position.set(0,1.5,0);
-	spriteObj.scale.set(0.5,0.5,0.5)
-	//scene.add(spriteObj);
-
+	spriteObj.position.set(0,1,0);
+	spriteObj.scale.set(0.15,0.15,0.15)
+	scene.add(spriteObj);
+*/
 	}
 
 /* LOADING SCREEN */
@@ -750,26 +814,26 @@ function addLoaders(){
 /* GET CENTER OF OBJECT */
  function getCentroid ( mesh ) {
 
-    mesh.geometry.computeBoundingBox();
-    boundingBox = mesh.geometry.boundingBox;
+	mesh.geometry.computeBoundingBox();
+	boundingBox = mesh.geometry.boundingBox;
 
-    var x0 = boundingBox.x[ 0 ];
-    var x1 = boundingBox.x[ 1 ];
-    var y0 = boundingBox.y[ 0 ];
-    var y1 = boundingBox.y[ 1 ];
-    var z0 = boundingBox.z[ 0 ];
-    var z1 = boundingBox.z[ 1 ];
+	var x0 = boundingBox.x[ 0 ];
+	var x1 = boundingBox.x[ 1 ];
+	var y0 = boundingBox.y[ 0 ];
+	var y1 = boundingBox.y[ 1 ];
+	var z0 = boundingBox.z[ 0 ];
+	var z1 = boundingBox.z[ 1 ];
 
 
-    var bWidth = ( x0 > x1 ) ? x0 - x1 : x1 - x0;
-    var bHeight = ( y0 > y1 ) ? y0 - y1 : y1 - y0;
-    var bDepth = ( z0 > z1 ) ? z0 - z1 : z1 - z0;
+	var bWidth = ( x0 > x1 ) ? x0 - x1 : x1 - x0;
+	var bHeight = ( y0 > y1 ) ? y0 - y1 : y1 - y0;
+	var bDepth = ( z0 > z1 ) ? z0 - z1 : z1 - z0;
 
-    var centroidX = x0 + ( bWidth / 2 ) + mesh.position.x;
-    var centroidY = y0 + ( bHeight / 2 )+ mesh.position.y;
-    var centroidZ = z0 + ( bDepth / 2 ) + mesh.position.z;
+	var centroidX = x0 + ( bWidth / 2 ) + mesh.position.x;
+	var centroidY = y0 + ( bHeight / 2 )+ mesh.position.y;
+	var centroidZ = z0 + ( bDepth / 2 ) + mesh.position.z;
 
-    return mesh.geometry.centroid = { x : centroidX, y : centroidY, z : centroidZ };
+	return mesh.geometry.centroid = { x : centroidX, y : centroidY, z : centroidZ };
 }
 
 /* update render on window resize */
@@ -887,17 +951,19 @@ function spriteHover() {
 /* animates the scene */
 function animate() {
 
-    requestAnimationFrame(animate); // sets the 60fps
+	requestAnimationFrame(animate); // sets the 60fps
 
-    // --------------------------------------------------------------
-    // test animation
-    // sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
-    // --------------------------------------------------------------
-if(startAnimationIsPlaying == true){
-	testObj.rotation.y += 0.005;
-}
-    render();
-    update();
+	// --------------------------------------------------------------
+	// test animation
+	// sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
+	// --------------------------------------------------------------
+
+	if(startAnimationIsPlaying == true){
+		testObj.rotation.y += 0.005;
+	}
+
+	render();
+	update();
 
 }
 
