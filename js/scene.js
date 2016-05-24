@@ -12,7 +12,8 @@ var stand, standGeometry, standMaterial; // reflective stand (needs reflection c
 var spriteObj, spriteMaterial; // info button sprite
 var sphere, sphereGeometry, spherePos; // test sphere
 var box; // set the center calculation (not helper version)
-var testObj;
+var testObj; // main modle is in this
+var testGroup; // dimentions are in this
 /* MATERIALS */
 var material01, material02;
 
@@ -63,6 +64,8 @@ var moveSpeed = 0.01; // test moveSpeed for TRHEEgui
 var rotationC = false; // set boolean for rotation for gui button
 var rotationCC = false; // set boolean for rotation for gui button
 
+var showDim = false; // toggle Dimentions
+
 /* INPUT DEVICES */
 var projector, mouse = { x: 0, y: 0 }, INTERSECTED; // for mouse over functions
 var keyboard; // keyboard input reference
@@ -95,6 +98,7 @@ manager.onLoad = function(){
 	console.log("ALL LOADED");
 
 	testObj = scene.getObjectByName('myGroup');
+
 	console.log(testObj.name);
 
 	box = new THREE.Box3(); // create a box to find center of object
@@ -102,55 +106,14 @@ manager.onLoad = function(){
 	box.center(controls.target);
 	console.log( box.min, box.max, box.size());
 
-/*
-	// create own dimention helper!! |<---- DIM ---->|
-	// @ params vector3: origin // where arrow starts
-	// @ params int: arrowSize // arrow head size
-	// @ params string: hex // arrow color
-	// @ params string: axisDir // give it x, y or z
-	// @ params float: distFrom // distance from the model
-/*
-	// width
-	var dir = new THREE.Vector3( box.min );
-	var origin = new THREE.Vector3( box.max );
-	var length = 1;
-	var hex = 0x000000;
+	testGroup = new THREE.Group();
+	scene.add(testGroup);
 
-	*/
-// CHECK THE AXIS FOR THE DIM with a case statement
-
-
-	var distFrom = 0.08; // distance from the geometry
-	var dir = new THREE.Vector3(0,0,1);
-	var origin = new THREE.Vector3(box.max.x+distFrom,box.max.y,-box.max.z);
-	var length = 1.7;
-	var hex = 0xFF0000;
-	var arrowSize = 0.015; // arrow head size
-
-	var arrowHelper = new THREE.ArrowHelper( dir, origin, length, hex, arrowSize, arrowSize);
-	var arrowHelper2 = new THREE.ArrowHelper( new THREE.Vector3(0,0,-1), origin, arrowSize+0.001, 0xFF0000, arrowSize, arrowSize);
-	arrowHelper.name = "dimHelper";
-	arrowHelper2.name = "dimHelper";
-	//arrowHelper.cone.material = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide}); // test to check if i could change line to a different material: RESULT: it works!
-	scene.add( arrowHelper );
-	scene.add( arrowHelper2 );
-
-	/* sprite */
-	spriteObj = new THREE.Sprite(spriteMaterial);
-	spriteObj.name = "sprite";
-	spriteObj.position.set(box.max.x+distFrom,box.max.y, 0);
-	spriteObj.scale.set(0.15,0.15,0.15)
-	//scene.add(spriteObj);
-
-	var Hello_Label = textSprite("180", {padding: 40});
-	Hello_Label.scale.normalize().multiplyScalar(0.001);
-	Hello_Label.position.set(box.max.x+distFrom,box.max.y, 0);
-	//Hello_Label.position.setZ(90);
-	//Hello_Label.position.setX(-95);
-	Hello_Label.rotation.set(11,-11,-11);
-	Hello_Label.name = "Hello Label";
-	// Hello_Label.id = "HL";
-	scene.add(Hello_Label);
+	// DIMENTIONS HERE
+	// TODO: pass in the options and the box.max details instead of the hardcoded numbers.
+	dimHelper(0.86, "x");
+	dimHelper(0.72, "y");
+	dimHelper(1.7, "z");
 
 	//console.log(box.center(controls.target));
 
@@ -269,7 +232,6 @@ function init() {
 
     keyboard = new THREEx.KeyboardState();
 
-
 // ******************************************************************
 // HELPERS ----------------------------------------------------------
 // ******************************************************************
@@ -319,11 +281,6 @@ function init() {
         /* COLORS */
         this.color0 = "#ffae23"; // CSS string
     }
-
-		// ********************************************************
-	// GUI
-	// ********************************************************
-
 	// ********************************************************
 
     window.onload = function(){
@@ -376,6 +333,17 @@ function init() {
 					startAnimationIsPlaying = !startAnimationIsPlaying; // toggle boolean to check if startAnimation is playing.
 					//alert(startAnimationIsPlaying);
 				}, false);
+
+				var el_showDim = document.getElementById("dimBtn");
+				el_showDim.addEventListener('mousedown', function(){
+					showDim = !showDim; // toggle dimentions
+
+					if(showDim == true){
+						testGroup.visible = true;
+					} else {
+						testGroup.visible = false;
+					}
+				}, false);
     }
 
 /* ADD THE FUCNTIONS HERE IN ORDER*/
@@ -402,42 +370,149 @@ function init() {
 // ******************************************************************
 // FUNCTIONS START --------------------------------------------------
 // ******************************************************************
-function textSprite(text, params) {
-    var font = "Arial",
-        size = 130,
-        color = "#000000";
-    		padding = 10;
+function dimHelper(inLength, inAxis, boxVec3, options){
 
-    font = "bold " + size + "px " + font;
+	/*
+		// create own dimention helper!! |<---- DIM ---->|
+		// @ params vector3: origin // where arrow starts
+		// @ params int: arrowSize // arrow head size
+		// @ params string: axisDir // give it x, y or z
+		// @ params float: distFrom // distance from the model
+		// @ params hex: arrowColor // color of arrow (0x000000)
+		// @ params float: arrowPadding // distance between the arrows for the text
+	/*
+		// width
+		var dir = new THREE.Vector3( box.min );
+		var origin = new THREE.Vector3( box.max );
+		var length = 1;
+		var hex = 0x000000;
+		*/
 
-    var canvas = document.createElement('canvas');
-    var context = canvas.getContext('2d');
-    context.font = font;
+		// OPTIONS
+		var options = options || {};
+		var arrowColor = 0x000000; // arrow color
+		var arrowSize = 0.015; // arrow head size
+		var arrowPadding = 0.1; // text padding between the arrows
+		var distFrom = 0.08; // distance from the geometry
 
-    // get size data (height depends only on font size)
-    var metrics = context.measureText(text),
-        textWidth = metrics.width;
+		// REQUIRED
+		var length = inLength;
+		var axis = inAxis;
 
-    canvas.width = textWidth + 3;
-    canvas.height = size + 3;
+		/* sprite */
+		spriteObj = new THREE.Sprite(spriteMaterial);
+		spriteObj.name = "sprite";
+		spriteObj.position.set(box.max.x+distFrom,box.max.y, 0);
+		spriteObj.scale.set(0.15,0.15,0.15)
+		//scene.add(spriteObj);
 
-    context.font = font;
-    context.fillStyle = color;
-    context.fillText(text, 0, size + 3);
-    //context.style.border="3px solid blue";
+		// change position of text to be middle of dimention
 
-    // canvas contents will be used for a texture
-    var texture = new THREE.Texture(canvas);
-    texture.needsUpdate = true;
+		var label = textSprite(length*100, {padding: 10}); // text output change here for the override
+		label.scale.normalize().multiplyScalar(0.001);
+		label.name = axis + " Label";
+		// label.position.set(box.max.x+distFrom+0.01,box.max.y+0.01, 0);
+		// Hello_Label.position.setZ(90);
+		// Hello_Label.position.setX(-95);
 
-    var mesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(canvas.width, canvas.height),
-    new THREE.MeshBasicMaterial({
-        map: texture,
-        side: THREE.DoubleSide,
-				transparent: true
-    }));
-    return mesh;
+
+		// Hello_Label.id = "HL";
+
+
+		// change dir depending on axis
+		var dir1; // arrow 1 direction
+		var dir2; // arrow 2 direction
+		var origin1; // origin of vector3
+		var origin2; // origin of vector3
+		switch(axis){
+			case "x":
+				dir1 = new THREE.Vector3(1,0,0); // this will change depending on the axis of the dimention: in this case the x axis
+				dir2 = new THREE.Vector3(-1,0,0); // this will change depending on the axis of the dimention: in this case the x axis
+
+				origin1 = new THREE.Vector3(0+arrowPadding,box.max.y,box.max.z+distFrom); // start point taking into account the distance from model and padding for the number
+				origin2 = new THREE.Vector3(0-arrowPadding,box.max.y,box.max.z+distFrom); // start point taking into account the distance from model and padding for the number
+
+				label.position.set(0,box.max.y+0.01, box.max.z+distFrom+0.01);
+				//label.rotation.y = Math.PI / 2;
+
+			break;
+			case "y":
+				dir1 = new THREE.Vector3(0,1,0); // this will change depending on the axis of the dimention: in this case the y axis
+				dir2 = new THREE.Vector3(0,-1,0); // this will change depending on the axis of the dimention: in this case the y axis
+
+				origin1 = new THREE.Vector3(box.max.x+distFrom,box.max.y/2+arrowPadding,box.max.z+distFrom); // start point taking into account the distance from model and padding for the number
+				origin2 = new THREE.Vector3(box.max.x+distFrom,box.max.y/2-arrowPadding,box.max.z+distFrom); // start point taking into account the distance from model and padding for the number
+
+				label.position.set(box.max.x+distFrom+0.01,(box.max.y/2)+0.01, box.max.z+distFrom);
+				//label.rotation.y = Math.PI / 0.10;
+
+			break;
+			case "z":
+				dir1 = new THREE.Vector3(0,0,1); // this will change depending on the axis of the dimention: in this case the z axis
+				dir2 = new THREE.Vector3(0,0,-1); // this will change depending on the axis of the dimention: in this case the z axis
+
+				origin1 = new THREE.Vector3(box.max.x+distFrom,box.max.y,0+arrowPadding); // start point taking into account the distance from model and padding for the number
+				origin2 = new THREE.Vector3(box.max.x+distFrom,box.max.y,0-arrowPadding); // start point taking into account the distance from model and padding for the number
+
+				label.position.set(box.max.x+distFrom+0.01,box.max.y+0.01, 0);
+				label.rotation.y = Math.PI / 2;
+
+			break;
+		}
+
+		var arrowHelper = new THREE.ArrowHelper( dir1, origin1, (length/2)-arrowPadding, arrowColor, arrowSize, arrowSize);
+	  var arrowHelper2 = new THREE.ArrowHelper( dir2, origin2, (length/2)-arrowPadding, arrowColor, arrowSize, arrowSize);
+		//var arrowHelper2 = new THREE.ArrowHelper( new THREE.Vector3(0,0,-1), origin, arrowSize+0.001, arrowColor, arrowSize, arrowSize);
+		arrowHelper.name = "[ " + axis + " ] DIM GROUP";
+		arrowHelper2.name = "[ " + axis + " ] DIM GROUP";
+		//arrowHelper.cone.material = new THREE.MeshBasicMaterial({color: 0xff0000, side: THREE.DoubleSide}); // test to check if i could change line to a different material: RESULT: it works!
+		//scene.add( arrowHelper );
+		//scene.add( arrowHelper2 );
+		//scene.add(label);
+		var group = new THREE.Group();
+		group.add(arrowHelper, arrowHelper2, label);
+		group.name = "dimGroup";
+		scene.add(group);
+
+		testGroup.add(group);
+
+		function textSprite(text, params) {
+		    var font = "Arial",
+		        size = 130,
+		        color = "#000000";
+		    		padding = 10;
+
+		    font = "bold " + size + "px " + font;
+
+		    var canvas = document.createElement('canvas');
+		    var context = canvas.getContext('2d');
+		    context.font = font;
+
+		    // get size data (height depends only on font size)
+		    var metrics = context.measureText(text),
+		        textWidth = metrics.width;
+
+		    canvas.width = textWidth + 3;
+		    canvas.height = size + 3;
+
+		    context.font = font;
+		    context.fillStyle = color;
+		    context.fillText(text, 0, size + 3);
+		    //context.style.border="3px solid blue";
+
+		    // canvas contents will be used for a texture
+		    var texture = new THREE.Texture(canvas);
+		    texture.needsUpdate = true;
+
+		    var mesh = new THREE.Mesh(
+		    new THREE.PlaneGeometry(canvas.width, canvas.height),
+		    new THREE.MeshBasicMaterial({
+		        map: texture,
+		        side: THREE.DoubleSide,
+						transparent: true
+		    }));
+		    return mesh;
+		}
 }
 
 /* ADD CAMERA REFLECTION CAMERA */
@@ -457,7 +532,10 @@ function addPhysicalLighting(){
 		//ballMat.needsUpdate = true;
 		//cubeMat.needsUpdate = true;
 		//floorMat.needsUpdate = true;
+		material01.needsUpdate = true;
+		material02.needsUpdate = true;
 		floorMaterial.needsUpdate = true;
+
 		previousShadowMap = params.shadows;
 	}
 	bulbLight.power = bulbLuminousPowers[ params.bulbPower ];
@@ -488,7 +566,7 @@ function addLights() {
 	});
 
 	bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-	bulbLight.position.set( 1, 2, 0 );
+	bulbLight.position.set( 0, 1, 0 );
 	bulbLight.castShadow = true;
 	bulbLight.shadow.bias = 0.1;
 	bulbLight.shadow.mapSize.width = 1024;
@@ -503,28 +581,28 @@ function addLights() {
 
 /* MATERIALS */
 function addMaterials() {
-	var textureName = "husslColors";
-	var textureUrl = "textures/"+textureName+"/";
+	var textureName = "wood_02";
+	var textureUrl = "textures/testTextures/wood/"+textureName+"/";
 	var loadedTextureName = textureUrl + textureName;
-	var textureExtention = ".png";
+	var textureExtention = ".jpg";
 	var textureWrappingAmount = 5; // texture wrapping amount (tiling)
-	var tempName = "textures/testTextures/wood/Melamine-wood-001/Melamine-wood-001.png";
+	var tempName = "textures/testTextures/wood/wood_02/wood_02.jpg";
 
 	var textureLoader = new THREE.TextureLoader(manager); // texture loader
 	// materials
 	var textureDiffuse;
 
 	// texture - texture must not be in the same folder or there is an error.
-	textureDiffuse = textureLoader.load(tempName, function(){ console.log('texture loaded'); },	function(){ alert('error');} );
+	textureDiffuse = textureLoader.load(loadedTextureName + textureExtention, function(){ console.log('texture loaded'); },	function(){ alert('error');} );
 
 	// Specular Map
-	//textureSpec = THREE.ImageUtils.loadTexture(loadedTextureName +'_spec'+textureExtention, {}, function(){}, function(){ alert('error'); });
+	textureSpec = textureLoader.load(loadedTextureName +'_spec'+textureExtention, function(){ console.log('texture loaded'); });
 
 	// Normal Map
-	//textureNormal = THREE.ImageUtils.loadTexture(loadedTextureName +'_normal'+textureExtention, {}, function(){},	function(){ alert('error'); });
+	textureNormal = textureLoader.load(loadedTextureName +'_normal'+textureExtention, function(){ console.log('texture loaded'); });
 
 	// Bump Map
-	//textureBump = THREE.ImageUtils.loadTexture(loadedTextureName +'_displace'+textureExtention, {}, function(){},	function(){ alert('error');	});
+	textureBump = textureLoader.load(loadedTextureName +'_displace'+textureExtention, function(){ console.log('texture loaded');	});
 
 	// Environment Map
 	//textureEnvironment = THREE.ImageUtils.loadTexture('textures/envMaps/envMap.jpg', {}, function(){ /*alert('Env map loaded');*/	},	function(){	alert('error');	});
@@ -533,7 +611,7 @@ function addMaterials() {
 	textureDiffuse.wrapS = THREE.RepeatWrapping;
 	textureDiffuse.wrapT = THREE.RepeatWrapping;
 	textureDiffuse.repeat.set(textureWrappingAmount,textureWrappingAmount);
-	/*
+
 	textureSpec.wrapS = THREE.RepeatWrapping;
 	textureSpec.wrapT = THREE.RepeatWrapping;
 	textureSpec.repeat.set(textureWrappingAmount,textureWrappingAmount);
@@ -545,7 +623,7 @@ function addMaterials() {
 	textureBump.wrapS = THREE.RepeatWrapping;
 	textureBump.wrapT = THREE.RepeatWrapping;
 	textureBump.repeat.set(textureWrappingAmount,textureWrappingAmount);
-	*/
+
 	// basic materials
 	testObjectMaterial01 = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xffffff, shininess: 500, reflectivity: 0, side: THREE.DoubleSide});
 	testObjectMaterial02 = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide});
@@ -553,19 +631,29 @@ function addMaterials() {
 	// textured material
 	material01 = new THREE.MeshPhongMaterial({
 		map: textureDiffuse,
+		specularMap: textureSpec,
+		//envMap: textureEnvironment,
+		bumpMap: textureBump,
+    normalMap: textureNormal,
+    normalScale: new THREE.Vector2( 0.15, 0.15 ),
 		specular: 0xffffff,
 		shininess: 10,
-		reflectivity: 0,
-			side: THREE.DoubleSide
+		reflectivity: 1,
+		side: THREE.DoubleSide
 	});
 
 	// textured material
 	material02 = new THREE.MeshPhongMaterial({
 		map: textureDiffuse,
+		specularMap: textureSpec,
+		//envMap: textureEnvironment,
+		bumpMap: textureBump,
+    normalMap: textureNormal,
+    normalScale: new THREE.Vector2( 0.15, 0.15 ),
 		specular: 0xffffff,
 		shininess: 10,
-		reflectivity: 0,
-			side: THREE.DoubleSide
+		reflectivity: 1,
+		side: THREE.DoubleSide
 	});
 
 	/* floor plane */
@@ -641,7 +729,7 @@ function addObjects(){
 
 
 	/* standMesh */
-	standGeometry = new THREE.CylinderGeometry(1, 1, 0.25, 64);
+	standGeometry = new THREE.CylinderGeometry(1.5, 1.5, 0.25, 64);
 
 	stand = new THREE.Mesh( standGeometry, standMaterial);
 	stand.receiveShadow = true;
@@ -717,11 +805,13 @@ function rotationUpdate() {
   // check for clockwise roation
   if (rotationC == true){
     testObj.rotation.y += rotationSpeed; // animate if true
+		testGroup.rotation.y += rotationSpeed; // animate if true
   }
 
   // check for counter clockwise rotation
   if (rotationCC == true){
     testObj.rotation.y -= rotationSpeed; // animate if true
+		testGroup.rotation.y -= rotationSpeed; // animate if true
   }
 }
 
@@ -809,31 +899,6 @@ function addLoaders(){
 		scene.add(object);
 
   });
-}
-
-/* GET CENTER OF OBJECT */
- function getCentroid ( mesh ) {
-
-	mesh.geometry.computeBoundingBox();
-	boundingBox = mesh.geometry.boundingBox;
-
-	var x0 = boundingBox.x[ 0 ];
-	var x1 = boundingBox.x[ 1 ];
-	var y0 = boundingBox.y[ 0 ];
-	var y1 = boundingBox.y[ 1 ];
-	var z0 = boundingBox.z[ 0 ];
-	var z1 = boundingBox.z[ 1 ];
-
-
-	var bWidth = ( x0 > x1 ) ? x0 - x1 : x1 - x0;
-	var bHeight = ( y0 > y1 ) ? y0 - y1 : y1 - y0;
-	var bDepth = ( z0 > z1 ) ? z0 - z1 : z1 - z0;
-
-	var centroidX = x0 + ( bWidth / 2 ) + mesh.position.x;
-	var centroidY = y0 + ( bHeight / 2 )+ mesh.position.y;
-	var centroidZ = z0 + ( bDepth / 2 ) + mesh.position.z;
-
-	return mesh.geometry.centroid = { x : centroidX, y : centroidY, z : centroidZ };
 }
 
 /* update render on window resize */
@@ -958,8 +1023,14 @@ function animate() {
 	// sphere.rotation.y += 0.011; // set rotation speed (temp disabled)
 	// --------------------------------------------------------------
 
+	// rotation animation check
 	if(startAnimationIsPlaying == true){
 		testObj.rotation.y += 0.005;
+		testGroup.rotation.y += 0.005;
+				console.log("true");
+	}
+	if(showDim == false){
+		testGroup.visible = false;
 	}
 
 	render();

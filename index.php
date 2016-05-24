@@ -311,7 +311,7 @@
 */
 
 		$("#settingsBtn").click(function () {
-			alert("SETTINGS");
+			//alert("SETTINGS");
 		});
 
 		/* toggle button icon changes */
@@ -385,7 +385,7 @@ foreach($images as $image){ $imgs[] = "$image"; }
   		<div id='rotateCounterClockwiseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-undo"></i></span></div>
   		<div id='playPauseBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-pause"></i></span></div>
   		<div id='screenshotBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-camera-retro"></i></span></div>
-  		<div id='settingsBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-cog"></i></span></div>
+  		<div id='dimBtn' class='guiBaseBtn hvr-float-shadow'><span class=""><i class="fa fa-arrows-h"></i></span></div>
   	</div>
   	<!-- top controls of gui bar -->
 
