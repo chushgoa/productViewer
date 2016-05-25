@@ -18,11 +18,10 @@
 
   body {
   	width: 100%;
-      font-family: Monospace;
-      font-weight: bold;
-      background-color: #FFFFFF;
-      margin: 0px;
-      overflow: hidden;
+    font-family:'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+    background-color: #FFFFFF;
+    margin: 0px;
+    overflow: hidden;
   }
 
   canvas {
@@ -350,12 +349,13 @@ $imgs = '';
 foreach($images as $image){ $imgs[] = "$image"; }
 // ---------------------------------------------------------------------------
 ?>
-	</body>
+
 
 	<!-- main page start here -->
 <!--<script src='js/scene.js'></script>-->
-<div id="canvasWrapper">
-  <div id="canvasBlock" style="width: 400px; height: 550px; margin: auto; background-color: red; position: relative;">
+
+<!--<div id="canvasWrapper">
+  <div id="canvasBlock" style="width: 100%; height: 100%; margin: auto; background-color: red; position: relative;"> -->
     <!-- top view of gui bar -->
   	<div id='guiBar'>
   		<div id='guiPrev' class='guiControlButton '>
@@ -389,8 +389,8 @@ foreach($images as $image){ $imgs[] = "$image"; }
   	</div>
   	<!-- top controls of gui bar -->
 
-    <img src="textures/logo/logoHussl.png" style='width: 20%; height; 20%; top: 10px; left: 10px; position: absolute;'>
-    <div style='position: absolute; top: 60px; left: 10px; color: #828282;'>
+    <img src="textures/logo/logoHussl.png" style='max-width: 100px; top: 10px; left: 10px; position: absolute;'>
+    <div style='position: absolute; top: 50px; left: 10px; color: #828282; font-size: 18px;'>
       <span style="font-weight: 700;">スタンダードチェア</span>スタッキング不可能<br>
       w43xd46xh78.5 sh45cm<br>
         <span style="color: #000;">
@@ -402,7 +402,9 @@ foreach($images as $image){ $imgs[] = "$image"; }
 
     </div>
     <script src='js/scene.js'></script>
+    <!--
   </div>
 </div>
-
+-->
+</body>
 </html>

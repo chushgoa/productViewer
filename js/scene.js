@@ -3,7 +3,7 @@
 // ******************************************************************
 /* GENERAL */
 var camera, controls, scene, renderer, light, stats;
-var canvasBlock = document.getElementById("canvasBlock"); // set the canvas to fit the div in the html named canvasBlock
+//var canvasBlock = document.getElementById("canvasBlock"); // set the canvas to fit the div in the html named canvasBlock
 var mirrorStandCamera;
 
 /* OBJECTS */
@@ -58,8 +58,8 @@ var clock = new THREE.Clock(); // for the lights
 var previousShadowMap = false; // set shadows
 
 /* TRANSLATE */
-var startAnimationIsPlaying = false; // controling playing the default rotation animation
-var rotationSpeed = 0.05; // test rotation speed for THREEgui
+var startAnimationIsPlaying = true; // controling playing the default rotation animation
+var rotationSpeed = 0.01; // test rotation speed for THREEgui
 var moveSpeed = 0.01; // test moveSpeed for TRHEEgui
 var rotationC = false; // set boolean for rotation for gui button
 var rotationCC = false; // set boolean for rotation for gui button
@@ -111,6 +111,11 @@ manager.onLoad = function(){
 
 	// DIMENTIONS HERE
 	// TODO: pass in the options and the box.max details instead of the hardcoded numbers.
+
+	//dimHelper(box.size().x, "x");
+	//dimHelper(box.size().y, "y");
+	//dimHelper(box.size().z, "z");
+
 	dimHelper(0.86, "x");
 	dimHelper(0.72, "y");
 	dimHelper(1.7, "z");
@@ -161,11 +166,14 @@ function init() {
 	renderer.toneMapping = THREE.ReinhardToneMapping;
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.setSize(canvasBlock.offsetWidth, canvasBlock.offsetHeight);
-  renderer.setClearColor(0xCCCCCC, 1);
+  //renderer.setSize(canvasBlock.offsetWidth, canvasBlock.offsetHeight);
+	renderer.setSize(window.innerWidth, window.innerHeight);
+
+	renderer.setClearColor(0xFFFFFF, 1);
   //renderer.shadowMapEnabled = true;
   //renderer.shadowMapType = THREE.PCFSoftShadowMap;
-  canvasBlock.appendChild(renderer.domElement);
+	document.body.appendChild(renderer.domElement);
+  //canvasBlock.appendChild(renderer.domElement);
 
 // ******************************************************************
 // SCENE ------------------------------------------------------------
@@ -177,8 +185,9 @@ function init() {
 // CAMERA -----------------------------------------------------------
 // ******************************************************************
 
-    camera = new THREE.PerspectiveCamera(50, canvasBlock.offsetWidth/canvasBlock.offsetHeight, 0.001, 20000);
-    camera.position.set(0,1,1);
+    //camera = new THREE.PerspectiveCamera(50, canvasBlock.offsetWidth/canvasBlock.offsetHeight, 0.001, 20000);
+		camera = new THREE.PerspectiveCamera(50,  window.innerWidth/window.innerHeight, 0.001, 20000);
+    camera.position.set(0,1,2.5);
 
 
 // ******************************************************************
@@ -270,7 +279,7 @@ function init() {
         this.movementSpeed = 0.011; // movement speed
         this.rotationSpeed = 0.011; // rotation speed
         this.scale = 1; //scale
-        this.fov = 80;// fov
+        this.fov = 57;// fov
 
         /* LIGHTS */
         this.lightPosX = 2.5;
@@ -284,6 +293,8 @@ function init() {
 	// ********************************************************
 
     window.onload = function(){
+			/*
+			// UNCOMMENT THIS FOR HE DEBUGGING TOOLS!!!
         var gui = new dat.GUI();
 
         // MASTER VARIABLES
@@ -318,9 +329,9 @@ function init() {
         //f2.open();
         //f4.open();
         gui.close();
-
+*/
         /* GUI hooks */
-        var el_rotateClockwise = document.getElementById("rotateClockwiseBtn");
+				var el_rotateClockwise = document.getElementById("rotateClockwiseBtn");
         el_rotateClockwise.addEventListener('mousedown', function(){guiRotateClockwise(true);}, false);
         el_rotateClockwise.addEventListener('mouseup', function(){guiRotateClockwise(false);}, false);
 
@@ -566,7 +577,7 @@ function addLights() {
 	});
 
 	bulbLight.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-	bulbLight.position.set( 0, 1, 0 );
+	bulbLight.position.set( 0, 1.5, 0 );
 	bulbLight.castShadow = true;
 	bulbLight.shadow.bias = 0.1;
 	bulbLight.shadow.mapSize.width = 1024;
@@ -581,12 +592,12 @@ function addLights() {
 
 /* MATERIALS */
 function addMaterials() {
-	var textureName = "wood_02";
+	var textureName = "Melamine-wood-001";
 	var textureUrl = "textures/testTextures/wood/"+textureName+"/";
 	var loadedTextureName = textureUrl + textureName;
-	var textureExtention = ".jpg";
+	var textureExtention = ".png";
 	var textureWrappingAmount = 5; // texture wrapping amount (tiling)
-	var tempName = "textures/testTextures/wood/wood_02/wood_02.jpg";
+	//var tempName = "textures/testTextures/wood/wood_02/wood_02.jpg";
 
 	var textureLoader = new THREE.TextureLoader(manager); // texture loader
 	// materials
@@ -725,7 +736,7 @@ function addObjects(){
 	floor.rotation.x = Math.PI / 2;
 	floor.position.y = -0.25;
 	floor.receiveShadow = true;
-	scene.add(floor);
+	//scene.add(floor);
 
 
 	/* standMesh */
@@ -822,10 +833,10 @@ function onDocumentMouseMove( event ) {
 	// event.preventDefault();
 
 	// update the mouse variable
-	//mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	//mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-	mouse.x = ( event.clientX / canvasBlock.offsetWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / canvasBlock.offsetHeight ) * 2 + 1;
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+	//mouse.x = ( event.clientX / canvasBlock.offsetWidth ) * 2 - 1;
+	//mouse.y = - ( event.clientY / canvasBlock.offsetHeight ) * 2 + 1;
 
 }
 
@@ -833,7 +844,7 @@ function onDocumentMouseMove( event ) {
 function addLoaders(){
 
 	var material;
-  var modelPath = "models/tc4.obj";
+  var modelPath = "models/st61.obj";
   var loader = new THREE.OBJLoader(manager);
   loader.load(modelPath, function (object) {
 
@@ -864,9 +875,33 @@ function addLoaders(){
 						console.log("seat = " + child.name);
 						child.material = material01;
 					break;
+					case "frameRim":
+						console.log("frame = " + child.name);
+						child.material = material02;
+					break;
 					case "frame":
 						console.log("frame = " + child.name);
 						child.material = material02;
+					break;
+					case "frameLegs":
+						console.log("frame = " + child.name);
+						child.material = material02;
+					break;
+					case "backrest":
+						console.log("backrest = " + child.name);
+						child.material = material01;
+					break;
+					case "bolts":
+						console.log("bolts = " + child.name);
+						child.material = new THREE.MeshPhongMaterial({color: 0x8e8e8e, specular: 0xcccccc, shininess: 0.1, reflectivity: 0.1, side: THREE.DoubleSide, shading: THREE.FlatShading});;
+					break;
+					case "footPads":
+						console.log("footpads = " + child.name);
+						child.material = new THREE.MeshPhongMaterial({color: 0xffffff, specular: 0xcccccc, shininess: 0.1, reflectivity: 0.1, side: THREE.DoubleSide});;
+					break;
+					default:
+						console.log("DEFAULT = " + child.name);
+						child.material = new THREE.MeshPhongMaterial({color: 0x00ff00, specular: 0xcccccc, shininess: 0.1, reflectivity: 0.1, side: THREE.DoubleSide});;
 					break;
 				}
       }
@@ -904,16 +939,17 @@ function addLoaders(){
 /* update render on window resize */
 function onWindowResize() {
 
-    //camera.aspect = window.innerWidth / window.innerHeight;
-    //camera.updateProjectionMatrix();
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-    //renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-	camera.aspect = canvasBlock.offsetWidth / canvasBlock.offsetHeight;
+		/*
+		camera.aspect = canvasBlock.offsetWidth / canvasBlock.offsetHeight;
     camera.updateProjectionMatrix();
 
     renderer.setSize(canvasBlock.offsetWidth, canvasBlock.offsetHeight);
-
+		*/
 
     render();
 
@@ -1025,9 +1061,8 @@ function animate() {
 
 	// rotation animation check
 	if(startAnimationIsPlaying == true){
-		testObj.rotation.y += 0.005;
-		testGroup.rotation.y += 0.005;
-				console.log("true");
+		testObj.rotation.y += 0.001;
+		testGroup.rotation.y += 0.001;
 	}
 	if(showDim == false){
 		testGroup.visible = false;
@@ -1041,7 +1076,7 @@ function animate() {
 /* update functions */
 function update(){
     spriteHover(); // update the sprite hover mouseover
-    guiControlsUpdate(); // update gui control changes
+    //guiControlsUpdate(); // update gui control changes
     rotationUpdate();
     keyboardControls(); // update keyboard controls
     controls.update(); // updates the mouse move controls.
@@ -1084,7 +1119,7 @@ $('.guiItem').click(function(){
 
 	textureDiffuse.wrapS = THREE.RepeatWrapping;
 	textureDiffuse.wrapT = THREE.RepeatWrapping;
-	textureDiffuse.repeat.set(5,5);
+	textureDiffuse.repeat.set(20,20);
 
 	//alert(x);
 });

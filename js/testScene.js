@@ -96,7 +96,7 @@ function animate(){
 }
 
 function update(){
-testObj.rotation.y += 0.005;
+  testObj.rotation.y += 0.005;
 }
 
 function render(){
