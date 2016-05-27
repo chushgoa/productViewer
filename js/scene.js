@@ -75,6 +75,8 @@ var guiControls; // GUI controls reference
 var rendererStats; // stats for rendering
 var manager; // loading manager
 
+/* PASSES */
+var composer;
 // -----------------------------------------------------------------------------
 
 // ********************************************************
@@ -181,6 +183,8 @@ function init() {
 
     scene = new THREE.Scene();
 
+
+
 // ******************************************************************
 // CAMERA -----------------------------------------------------------
 // ******************************************************************
@@ -189,7 +193,13 @@ function init() {
 		camera = new THREE.PerspectiveCamera(50,  window.innerWidth/window.innerHeight, 0.001, 20000);
     camera.position.set(0,1,2.5);
 
+		// BLOOM
+			composer = new THREE.EffectComposer(renderer);
+			var renderPass = new THREE.RenderPass(scene, camera);
+			composer.addPass(renderPass);
 
+			var bloomPass = new THREE.BloomPass(3, 25, 5, 256);
+			composer.addPass(bloomPass);
 // ******************************************************************
 // CONTROLS ---------------------------------------------------------
 // ******************************************************************
@@ -1096,8 +1106,13 @@ function render() {
 	stand.visible = true;
 	/* mirror camera */
 
-  renderer.render(scene, camera);
 
+	/* WORKING ON PASSES */
+	/*
+	var delta = clock.getDelta();
+	composer.render(delta);
+  renderer.render(scene, camera);
+*/
 }
 
 // CHANGE TEXTURE ON CLICK!!

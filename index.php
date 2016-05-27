@@ -218,7 +218,14 @@
 <script src="js/loadingScreen.js"></script><!-- ADD A LOADING SCREEN -->
 <script src="js/info.js"></script><!-- INFO ABOUT PROGRAM IN A POPUP -->
 <script src="js/Detector.js"></script><!-- Detects if if browswer is using WebGL -->
-<script src="js/Raycaster.js"></script><!-- RAYCASTER FOR THE INTERSECTIONS -->
+<script src="js/Raycaster.js"></script><!-- RAYCASTER FOR THE INTERSECTIONS -->3
+<script src="js/WebGLRenderer.js"></script><!-- WEBGL RENDERER -->
+<script src="js/EffectComposer.js"></script><!-- EffectComposer -->
+<script src="js/ShaderPass.js"></script><!-- pass -->
+<script src="js/BloomPass.js"></script><!-- pass -->
+<script src="js/RenderPass.js"></script><!-- pass -->
+<script src="js/CopyShader.js"></script><!-- shader -->
+<script src="js/ConvolutionShader.js"></script><!-- shader -->
 <script src="js/THREEx.screenshot.js"></script><!-- SCREEN SHOT -->
 
 <!-- INCLUDES END -->
