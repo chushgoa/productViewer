@@ -194,12 +194,14 @@ function init() {
     camera.position.set(0,1,2.5);
 
 		// BLOOM
+		/*
 			composer = new THREE.EffectComposer(renderer);
 			var renderPass = new THREE.RenderPass(scene, camera);
 			composer.addPass(renderPass);
 
 			var bloomPass = new THREE.BloomPass(3, 25, 5, 256);
 			composer.addPass(bloomPass);
+			*/
 // ******************************************************************
 // CONTROLS ---------------------------------------------------------
 // ******************************************************************
@@ -391,6 +393,8 @@ function init() {
 // ******************************************************************
 // FUNCTIONS START --------------------------------------------------
 // ******************************************************************
+
+
 function dimHelper(inLength, inAxis, boxVec3, options){
 
 	/*
@@ -482,7 +486,7 @@ function dimHelper(inLength, inAxis, boxVec3, options){
 		}
 
 		var arrowHelper = new THREE.ArrowHelper( dir1, origin1, (length/2)-arrowPadding, arrowColor, arrowSize, arrowSize);
-	  var arrowHelper2 = new THREE.ArrowHelper( dir2, origin2, (length/2)-arrowPadding, arrowColor, arrowSize, arrowSize);
+		var arrowHelper2 = new THREE.ArrowHelper( dir2, origin2, (length/2)-arrowPadding, arrowColor, arrowSize, arrowSize);
 		//var arrowHelper2 = new THREE.ArrowHelper( new THREE.Vector3(0,0,-1), origin, arrowSize+0.001, arrowColor, arrowSize, arrowSize);
 		arrowHelper.name = "[ " + axis + " ] DIM GROUP";
 		arrowHelper2.name = "[ " + axis + " ] DIM GROUP";
@@ -602,10 +606,10 @@ function addLights() {
 
 /* MATERIALS */
 function addMaterials() {
-	var textureName = "Melamine-wood-001";
-	var textureUrl = "textures/testTextures/wood/"+textureName+"/";
+	var textureName = "wood_02";
+	var textureUrl = "textures/st4nTextures/wood/"+textureName+"/";
 	var loadedTextureName = textureUrl + textureName;
-	var textureExtention = ".png";
+	var textureExtention = ".jpg";
 	var textureWrappingAmount = 5; // texture wrapping amount (tiling)
 	//var tempName = "textures/testTextures/wood/wood_02/wood_02.jpg";
 
@@ -614,7 +618,7 @@ function addMaterials() {
 	var textureDiffuse;
 
 	// texture - texture must not be in the same folder or there is an error.
-	textureDiffuse = textureLoader.load(loadedTextureName + textureExtention, function(){ console.log('texture loaded'); },	function(){ alert('error');} );
+	textureDiffuse = textureLoader.load(loadedTextureName + textureExtention, function(){ console.log('texture loaded'); },	function(){ alert('error'); });
 
 	// Specular Map
 	textureSpec = textureLoader.load(loadedTextureName +'_spec'+textureExtention, function(){ console.log('texture loaded'); });
@@ -656,10 +660,10 @@ function addMaterials() {
 		//envMap: textureEnvironment,
 		bumpMap: textureBump,
     normalMap: textureNormal,
-    normalScale: new THREE.Vector2( 0.15, 0.15 ),
+    normalScale: new THREE.Vector2( 0.25, 0.25 ),
 		specular: 0xffffff,
-		shininess: 10,
-		reflectivity: 1,
+		shininess: 500,
+		reflectivity: 0,
 		side: THREE.DoubleSide
 	});
 
@@ -734,7 +738,7 @@ function addMaterials() {
 
 		//materialMatCap.uniforms.tMatCap.value.wrapS =
 		//materialMatCap.uniforms.tMatCap.value.wrapT =
-		THREE.ClampToEdgeWrapping;
+		//THREE.ClampToEdgeWrapping;
 }
 
 /* OBJECTS */
@@ -800,7 +804,7 @@ function addLoadingScreen() {
   loadingScreen.style.fontFamily = 'Monospace';
   loadingScreen.innerHTML = 'LOADING...';
   document.body.appendChild( loadingScreen );
-  console.log("loadingScreen");
+
 }
 
 /* bound button to rotate camera clockwise */
@@ -854,7 +858,7 @@ function onDocumentMouseMove( event ) {
 function addLoaders(){
 
 	var material;
-  var modelPath = "models/st61.obj";
+  var modelPath = "models/tc4.obj";
   var loader = new THREE.OBJLoader(manager);
   loader.load(modelPath, function (object) {
 
@@ -1111,8 +1115,8 @@ function render() {
 	/*
 	var delta = clock.getDelta();
 	composer.render(delta);
-  renderer.render(scene, camera);
 */
+	renderer.render(scene, camera);
 }
 
 // CHANGE TEXTURE ON CLICK!!

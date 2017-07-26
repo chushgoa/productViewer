@@ -218,7 +218,7 @@
 <script src="js/loadingScreen.js"></script><!-- ADD A LOADING SCREEN -->
 <script src="js/info.js"></script><!-- INFO ABOUT PROGRAM IN A POPUP -->
 <script src="js/Detector.js"></script><!-- Detects if if browswer is using WebGL -->
-<script src="js/Raycaster.js"></script><!-- RAYCASTER FOR THE INTERSECTIONS -->3
+<script src="js/Raycaster.js"></script><!-- RAYCASTER FOR THE INTERSECTIONS -->
 <script src="js/WebGLRenderer.js"></script><!-- WEBGL RENDERER -->
 <script src="js/EffectComposer.js"></script><!-- EffectComposer -->
 <script src="js/ShaderPass.js"></script><!-- pass -->
@@ -346,14 +346,26 @@
 // ----------------------------------------------------------------------------
 // path to directory to scan. i have included a wildcard for a subdirectory
 // can set how deep you want to go by the stars "textures/*/*/" will search 2 folders down from 'textures'
-$directory = "textures/testTextures/*/";
+$directory = "textures/st4nTextures/*/*/";
 
 //get all image files with a .jpg extension.
 $images = glob($directory."*.{gif,jpg,png}", GLOB_BRACE);
 
 $imgs = '';
 // create array
-foreach($images as $image){ $imgs[] = "$image"; }
+foreach($images as $image){
+
+  // check if each images has the extension of _displace, _normal, or _spec 
+  // and do not include them in the array
+  if(
+    strpos($image, '_displace') !== false ||
+    strpos($image, '_normal') !== false ||
+    strpos($image, '_spec') !== false
+  ){} else {
+      $imgs[] = "$image";
+  }
+
+}
 // ---------------------------------------------------------------------------
 ?>
 
